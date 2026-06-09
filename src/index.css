@@ -1,0 +1,194 @@
+@import 'tailwindcss';
+
+/*
+ * Fantasy dark theme.
+ * Custom palette + fonts are exposed as Tailwind utilities (bg-gold, text-parchment, font-serif...).
+ */
+@theme {
+  --color-dungeon: #0d1117;
+  --color-surface: #161b22;
+  --color-surface-elevated: #21262d;
+  --color-gold: #c9a227;
+  --color-parchment: #e8d5b0;
+  --color-muted: #94a3b8;
+  --color-danger: #8b1a1a;
+  --color-magic: #7c3aed;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'EB Garamond', Georgia, serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-dungeon);
+  color: var(--color-parchment);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Thin themed scrollbars for the dark UI. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-surface-elevated) transparent;
+}
+
+/*
+ * Drifting motes on the title screen.
+ * CSS-driven (not framer-motion) so the infinite loop never blocks
+ * AnimatePresence route transitions.
+ */
+@keyframes particle-float {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateY(-26px);
+  }
+}
+
+/*
+ * Pulsing gold glow for the final "Begin Adventure" CTA.
+ * CSS-driven (not framer-motion) so it never blocks AnimatePresence exit.
+ */
+@keyframes begin-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 22px 4px rgba(201, 162, 39, 0.55);
+  }
+}
+
+.begin-pulse {
+  animation: begin-pulse 1.6s ease-in-out infinite;
+}
+
+/* Blinking caret shown while the typewriter is still printing. */
+@keyframes typewriter-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 14px;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background-color: var(--color-gold);
+  animation: typewriter-blink 1s steps(1) infinite;
+}
+
+/* Combat: idle die wobble, a tumbling roll, HP-bar damage shake, crit pulse. */
+@keyframes dice-idle {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+.dice-idle {
+  animation: dice-idle 3s ease-in-out infinite;
+}
+
+@keyframes dice-roll {
+  0% {
+    transform: rotateX(0) rotateY(0) scale(0.8);
+  }
+  50% {
+    transform: rotateX(360deg) rotateY(180deg) scale(1.15);
+  }
+  100% {
+    transform: rotateX(720deg) rotateY(360deg) scale(1);
+  }
+}
+
+.dice-roll {
+  animation: dice-roll 0.6s ease-out;
+}
+
+@keyframes hp-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+.hp-shake {
+  animation: hp-shake 0.3s ease-in-out;
+}
+
+@keyframes crit-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.crit-pulse {
+  animation: crit-pulse 0.6s ease-in-out infinite;
+}
+
+/* Level-up title glow and the Game Over tombstone sway. */
+@keyframes levelup-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 8px rgba(201, 162, 39, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 26px rgba(201, 162, 39, 0.95);
+  }
+}
+
+.levelup-glow {
+  animation: levelup-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes skull-sway {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+.skull-sway {
+  animation: skull-sway 3.5s ease-in-out infinite;
+}
