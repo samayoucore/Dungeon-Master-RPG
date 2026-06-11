@@ -1,141 +1,190 @@
-# ⚔️ Dungeon Master
+<div align="center">
 
-> A procedural browser RPG built **without AI APIs** — every dungeon, story beat and battle is driven by pure algorithms, templates and weighted random tables, exactly like a tabletop game master would run them.
+# ⚔️ Dungeon Oracle
 
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38BDF8?logo=tailwindcss&logoColor=white)
-![Zustand](https://img.shields.io/badge/Zustand-state-2D3748)
-![License](https://img.shields.io/badge/license-MIT-c9a227)
+### A procedural browser RPG with an AI Dungeon Master
 
----
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-5.2-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Zustand](https://img.shields.io/badge/Zustand-4.5-FF6B35?style=flat-square)](https://zustand-demo.pmnd.rs)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
-## 🎮 Demo
+<br/>
 
-> 📹 *Recording coming soon.* In the meantime, **clone and run locally to play** (see [Getting Started](#-getting-started)). The whole game runs offline in the browser — no backend, no API keys.
+*Descend into a procedurally generated dungeon. Every room is unique.<br/>Every action is answered by an AI Dungeon Master who remembers your story.*
+
+<br/>
+
+![Demo placeholder](https://via.placeholder.com/800x400/0d1117/c9a227?text=⚔+Recording+coming+soon+⚔)
+
+<br/>
+
+[**Play Demo**](#getting-started) · [**Report Bug**](issues) · [**Request Feature**](issues)
+
+</div>
 
 ---
 
 ## ✨ Features
 
-- 🏰 **Procedural dungeon generation** — Binary Space Partitioning carves 12–18 connected rooms per floor onto an 80×60 grid.
-- 🗺️ **Canvas mini-map with fog of war** — rooms reveal as you explore, with a pulsing "you are here" marker.
-- 📜 **Procedural narrative engine** — hundreds of templates + contextual variables produce unique room descriptions every time. No two runs read alike.
-- ⌨️ **Natural-language commands** — type `look`, `search`, `rest`, `inventory`… or use quick-action buttons. Output is printed with a typewriter effect.
-- 🎲 **D&D 5e-inspired combat** — initiative, advantage/disadvantage, criticals & fumbles, per-enemy AI (aggressive, berserker, tactical, coward, support), status effects and an animated dice roller.
-- 🧙 **Full character creation** — race, class, point-buy stats, background, derived HP/AC and starting gear.
-- 📈 **Leveling & progression** — XP thresholds, hit-die HP gains, class features and a celebratory level-up screen.
-- 🎒 **Inventory & equipment** — equip weapons/armor/shields into slots, recompute AC, manage encumbrance.
-- 🔊 **Procedural sound** — every effect is synthesised at runtime with the Web Audio API. Zero audio files.
-- 💾 **3 save slots + autosave** — full game state persists to `localStorage`; autosaves every few turns.
-- 📱 **Responsive** — three-column desktop layout collapses to a tabbed mobile interface.
+- **🗺 Procedural Dungeon Generation** — BSP algorithm creates a unique dungeon every run. No two playthroughs are the same
+- **🤖 AI Dungeon Master** — Powered by Groq (Llama 3.1 70B). Reacts intelligently to anything you type, remembers your story, awards loot and triggers events dynamically
+- **⚔️ D&D 5e Combat** — Full turn-based combat with initiative, attack rolls, critical hits, status effects and enemy AI behaviours
+- **🧙 6 Classes & 6 Races** — Fighter, Rogue, Wizard, Cleric, Ranger, Bard × Human, Elf, Dwarf, Halfling, Half-Orc, Tiefling — each with unique stats and features
+- **🎲 Real Dice Mechanics** — d4 through d20 with advantage/disadvantage, animated 3D dice roller
+- **🌫 Fog of War** — Canvas map reveals as you explore, adjacent rooms shown dimly
+- **📦 Inventory & Equipment** — 9 equipment slots, drag-and-drop loot, weight system
+- **📜 Dynamic Narrative Engine** — 200+ templates × 500+ context variables generate thousands of unique room descriptions without any AI
+- **🔊 Procedural Audio** — All sound effects generated via Web Audio API — zero audio files
+- **💾 3 Save Slots** — Autosave every 3 turns, full state serialization to localStorage
+- **📱 Fully Responsive** — Tab navigation on mobile, full layout on desktop
 
 ---
 
-## 🏗️ Architecture
+## 🎮 How to Play
 
-The project deliberately separates the **game engine** from **React**:
+1. **Create your hero** — pick a race, class, name and distribute ability points
+2. **Explore the dungeon** — move between rooms, each described uniquely by the AI DM
+3. **Take actions** — type anything: *"Я осматриваю руны на стене"*, *"Пытаюсь взобраться наверх"*, *"Атакую гоблина"*
+4. **Fight enemies** — turn-based combat with dice rolls, abilities and loot
+5. **Survive** — descend deeper, level up, find legendary gear, defeat the boss
 
-```
-src/engine/    ← pure TypeScript: no React, no DOM, no store. Deterministic & testable.
-src/components ← presentation only. Reads the store, calls engine functions, renders UI.
-src/store/     ← a single Zustand + Immer store holding the whole GameState.
-```
-
-Keeping `src/engine/` framework-free means the dungeon generator, combat math and narrative system can be reasoned about (and unit-tested) in isolation — UI bugs can never corrupt game logic, and the logic has no idea a UI exists.
-
-**The narrative engine** is the heart of the "DM-without-AI" illusion. Each description is a template like
-`"You enter a {size} corridor. {lighting}. {floor_detail}."` whose placeholders are filled from weighted
-dictionaries chosen by context (room type, enemies present, the hero's wounds). A few hundred templates and
-variables combine into thousands of variations, so descriptions feel hand-written without a single API call.
-
-**The BSP dungeon generator** starts with the full map rectangle and recursively splits it into smaller
-sub-spaces (40–60% cuts for variety). Each leaf becomes a room; sibling sub-trees are joined with
-L-shaped corridors, guaranteeing a fully connected floor. A separate *populator* then assigns each room a
-type and fills it with enemies, loot, traps and lore from weighted tables.
+> **Tip:** Add a free Groq API key in Settings to unlock the full AI Dungeon Master experience. Get one at [console.groq.com](https://console.groq.com) — no credit card required.
 
 ---
 
 ## 🚀 Getting Started
 
 ```bash
-git clone <your-repo-url>
-cd dnd
+# Clone the repository
+git clone https://github.com/your-username/dungeon-oracle.git
+cd dungeon-oracle
+
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-Then open the printed local URL (default `http://localhost:5173`).
+Open [http://localhost:5173](http://localhost:5173) and begin your adventure.
 
-```bash
-npm run build    # type-check + production bundle
-npm run preview  # serve the production build
-```
+> The game works fully without an API key — the narrative engine uses template-based generation as a fallback. Add a Groq key in Settings for AI-powered responses.
 
 ---
 
-## 🎲 How to Play
+## 🏗️ Architecture
 
-1. **Create your hero** — pick a race and class, spend 27 point-buy points, choose a background.
-2. **Explore** — read each room's description, then pick an exit to move deeper into the dungeon.
-3. **Act** — type commands (`search`, `rest`, `look`…) or tap the quick-action buttons.
-4. **Fight** — entering a room with enemies starts combat. Attack, dodge, flee, or quaff a potion; the dice decide your fate.
-5. **Grow** — defeat foes for XP and loot, level up to unlock class features, and equip what you find.
+The key design decision is the **separation of the game engine from React**. Everything in `src/engine/` is pure TypeScript with zero framework dependencies — it can be tested in isolation, reused, or ported to another frontend.
 
-> 💡 Tip: press **Space** (or click) to skip the typewriter animation.
+```
+src/
+├── engine/               # Pure TypeScript — no React imports
+│   ├── dungeon/          # BSP generation, room population, bestiary
+│   ├── narrative/        # Template engine, context variables, DM responses
+│   ├── combat/           # Dice system, turn resolution, status effects
+│   ├── character/        # Creation, stat calculation, levelling
+│   ├── ai/               # Groq service, message history, system prompts
+│   └── audio/            # Procedural sound generation (Web Audio API)
+│
+├── store/                # Zustand store — single source of truth
+├── components/           # React UI layer
+│   ├── screens/          # Full-screen views (Title, Game, CharCreation...)
+│   ├── game/             # In-game panels (NarrativeLog, CombatPanel, Map...)
+│   ├── character/        # CharacterSheet, InventoryPanel
+│   └── ui/               # Reusable atoms (TypewriterText, Toast, DiceRoller)
+├── types/                # All TypeScript interfaces in one place
+└── utils/                # Save/load, formatting helpers
+```
+
+### Narrative Engine
+
+Room descriptions are generated without any AI — a template system picks from 200+ patterns and substitutes contextual variables:
+
+```
+Template: "You enter a {size} {room_type}. {lighting}. {smell}."
+Context:   size="cramped", room_type="crypt", lighting="Pale moss glows dimly",
+           smell="The air reeks of decay"
+Result:    "You enter a cramped crypt. Pale moss glows dimly. The air reeks of decay."
+```
+
+With ~500 variables across biomes, time-of-day, character state and room history, the same template generates thousands of unique variations.
+
+### BSP Dungeon Generator
+
+```
+1. Start with the full map rectangle (80×60 tiles)
+2. Recursively split into sub-spaces (random 40–60% split ratio)
+3. Place a room in each leaf node (random size within bounds)
+4. Connect adjacent rooms with L-shaped corridors
+5. Assign room types and populate with enemies/loot
+```
+
+### AI Dungeon Master
+
+The game state is serialised and injected into every Groq request as a system prompt. The model returns structured JSON with fields for `narrative`, `combatStart`, `itemFound`, `requiresRoll`, etc. — the frontend applies each mechanic programmatically:
+
+```
+Player types → buildSystemPrompt(gameState) → Groq API → parse DMResponse → apply mechanics
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Technology | Why it's used |
+| Technology | Purpose |
 |---|---|
-| **React 19 + TypeScript** | Component UI with strict, fully-typed game models |
-| **Vite 8** | Instant dev server and fast production builds |
-| **Tailwind CSS v4** | Utility-first styling with a custom dark fantasy theme (CSS-first `@theme`) |
-| **Zustand + Immer** | Minimal global store with ergonomic immutable updates |
-| **Framer Motion** | Screen and combat transitions, modals, level-up burst |
-| **Canvas API** | The dungeon mini-map with fog of war |
-| **Web Audio API** | Fully procedural sound effects — no asset files |
-| **lucide-react** | Crisp UI icons |
+| React 18 + TypeScript | UI layer with strict typing |
+| Vite | Fast dev server and bundler |
+| Tailwind CSS | Utility-first dark fantasy styling |
+| Zustand + Immer | Global game state with immutable updates |
+| Framer Motion | Animations (dice, transitions, combat) |
+| Canvas API | Dungeon map with fog of war |
+| Groq API (Llama 3.1 70B) | Free AI Dungeon Master |
+| Web Audio API | Procedural sound effects, zero audio files |
+| localStorage | 3-slot save system with autosave |
 
 ---
 
-## 📁 Project Structure
+## 📸 Screenshots
 
-```
-src/
-├── engine/                 # Framework-free game logic (pure, testable)
-│   ├── random.ts           #   Seeded RNG (mulberry32) + weighted helpers
-│   ├── character/          #   Creation, progression, equipment, data tables
-│   ├── dungeon/            #   BSP generator, populator, bestiary, loot tables
-│   ├── narrative/          #   Template dictionaries + text-assembly engine
-│   ├── combat/             #   Dice math + the turn-based combat system
-│   └── audio/              #   Procedural Web Audio sound engine
-├── components/
-│   ├── screens/            #   Title, creation wizard, game, game over, level up
-│   ├── character/          #   Character sheet, inventory, equipment
-│   ├── game/               #   Map, combat panel, narrative log, player input
-│   └── ui/                 #   Typewriter text, toasts
-├── hooks/                  # useAutosave, useSound
-├── store/                  # The Zustand game store
-├── utils/                  # localStorage save/load
-└── types/                  # All shared domain types
-```
+| Title Screen | Character Creation | Game Screen |
+|---|---|---|
+| ![Title](https://via.placeholder.com/280x160/0d1117/c9a227?text=Title+Screen) | ![Creation](https://via.placeholder.com/280x160/0d1117/c9a227?text=Character+Creation) | ![Game](https://via.placeholder.com/280x160/0d1117/c9a227?text=Game+Screen) |
+
+| Combat | Dungeon Map | Inventory |
+|---|---|---|
+| ![Combat](https://via.placeholder.com/280x160/0d1117/8b1a1a?text=Combat+System) | ![Map](https://via.placeholder.com/280x160/0d1117/c9a227?text=Dungeon+Map) | ![Inv](https://via.placeholder.com/280x160/0d1117/c9a227?text=Inventory) |
 
 ---
 
 ## 🗺️ Roadmap
 
-- 🔮 A full spell system with spell slots and area effects
-- 🧩 Multi-floor descents with escalating difficulty and a final boss arc
-- 🛒 A working merchant economy (buy / sell / haggle)
-- ⚒️ Crafting and item enchanting
-- 🧑‍🤝‍🧑 Companions / party members with their own AI
-- ☁️ Optional cloud saves and run sharing via seed codes
-- 🏆 Achievements and a run-history meta-progression layer
+- [ ] **Multiplayer co-op** — two players in the same dungeon via Firebase Realtime DB
+- [ ] **Leaderboard** — global top runs by floor reached and enemies defeated
+- [ ] **Multiple floors** — descend deeper with increasing difficulty and new biomes
+- [ ] **Spell system** — full spellcasting with slots, spell lists per class
+- [ ] **Crafting** — combine items found in the dungeon
+- [ ] **Boss lore** — unique AI-generated backstory for each boss encounter
+- [ ] **Cloud saves** — sync progress across devices via Google Auth
 
 ---
 
-<p align="center"><em>Built as a portfolio project — clean architecture, strict TypeScript, zero external game services.</em></p>
+## 📄 License
+
+MIT © [your-name](https://github.com/your-username)
+
+---
+
+<div align="center">
+
+Made with ⚔️ and too many d20 rolls
+
+*If this project helped you or impressed you, consider leaving a ⭐*
+
+</div>
