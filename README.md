@@ -15,14 +15,6 @@
 
 *Descend into a procedurally generated dungeon. Every room is unique.<br/>Every action is answered by an AI Dungeon Master who remembers your story.*
 
-<br/>
-
-![Demo placeholder](https://via.placeholder.com/800x400/0d1117/c9a227?text=⚔+Recording+coming+soon+⚔)
-
-<br/>
-
-[**Play Demo**](#getting-started) · [**Report Bug**](issues) · [**Request Feature**](issues)
-
 </div>
 
 ---
