@@ -26,7 +26,7 @@ interface DraftState {
   background: CharacterBackground | null;
 }
 
-const STEP_LABELS = ['Race', 'Class', 'Name', 'Stats', 'Background'];
+const STEP_LABELS = ['Раса', 'Класс', 'Имя', 'Статы', 'Фон'];
 const LAST_STEP = STEP_LABELS.length - 1;
 
 // Each step slides in from the side matching the navigation direction
@@ -141,7 +141,7 @@ export default function CharacterCreationScreen() {
           onClick={goBack}
           className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-surface-elevated px-6 py-3 text-muted transition-colors hover:border-gold hover:text-gold sm:flex-none sm:px-8"
         >
-          <ArrowLeft className="h-4 w-4" /> Back
+          <ArrowLeft className="h-4 w-4" /> Назад
         </button>
         <button
           type="button"
@@ -152,10 +152,10 @@ export default function CharacterCreationScreen() {
           } ${beginReady ? 'begin-pulse' : ''}`}
         >
           {step === LAST_STEP ? (
-            'Begin Adventure ⚔'
+            'Начать приключение ⚔'
           ) : (
             <>
-              Continue <ArrowRight className="h-4 w-4" />
+              Далее <ArrowRight className="h-4 w-4" />
             </>
           )}
         </button>

@@ -1,6 +1,6 @@
 import type { Item } from '../../types';
 import { equipmentSlotFor } from '../../engine/character/equipment';
-import { RARITY_TEXT } from './itemMeta';
+import { RARITY_RU, RARITY_TEXT, TYPE_RU } from './itemMeta';
 
 interface ItemTooltipProps {
   item: Item;
@@ -15,14 +15,14 @@ interface ItemTooltipProps {
 function statLine(item: Item): string | null {
   if (item.weaponStats) {
     const w = item.weaponStats;
-    return `${w.damageCount}d${w.damageDice.slice(1)}${w.damageBonus ? `+${w.damageBonus}` : ''} ${w.damageType}`;
+    return `${w.damageCount}к${w.damageDice.slice(1)}${w.damageBonus ? `+${w.damageBonus}` : ''} урона`;
   }
   if (item.armorStats) {
-    return item.type === 'shield' ? `+${item.armorStats.baseAc} AC` : `AC ${item.armorStats.baseAc}`;
+    return item.type === 'shield' ? `+${item.armorStats.baseAc} КБ` : `КБ ${item.armorStats.baseAc}`;
   }
   if (item.potionEffect?.effect === 'heal') {
     const p = item.potionEffect;
-    return `Heals ${p.diceCount ?? 1}d${(p.diceType ?? 'd4').slice(1)}${p.bonus ? `+${p.bonus}` : ''} HP`;
+    return `Лечит ${p.diceCount ?? 1}к${(p.diceType ?? 'd4').slice(1)}${p.bonus ? `+${p.bonus}` : ''} HP`;
   }
   return null;
 }
@@ -54,8 +54,8 @@ export default function ItemTooltip({ item, equipped, onEquip, onUnequip, onUse,
           <div className={`font-serif text-base ${RARITY_TEXT[item.rarity]}`}>
             {item.icon} {item.name}
           </div>
-          <div className="text-[11px] capitalize text-muted">
-            {item.rarity.replace('-', ' ')} {item.type} · {item.weight} lb · {item.value} gp
+          <div className="text-[11px] text-muted">
+            {RARITY_RU[item.rarity]} · {TYPE_RU[item.type]} · {item.weight} фнт · {item.value} зол.
           </div>
         </div>
         <button type="button" onClick={onClose} aria-label="Close" className="text-muted hover:text-gold">
@@ -65,10 +65,10 @@ export default function ItemTooltip({ item, equipped, onEquip, onUnequip, onUse,
       {line && <div className="mt-1 text-xs text-gold">{line}</div>}
       <p className="mt-1 text-xs leading-relaxed text-parchment/80">{item.description}</p>
       <div className="mt-2 flex flex-wrap gap-2">
-        {equipped && <TooltipButton label="Unequip" onClick={onUnequip} variant="ghost" />}
-        {canEquip && <TooltipButton label="Equip" onClick={onEquip} variant="primary" />}
-        {canUse && <TooltipButton label="Use" onClick={onUse} variant="primary" />}
-        {!equipped && <TooltipButton label="Drop" onClick={onDrop} variant="danger" />}
+        {equipped && <TooltipButton label="Снять" onClick={onUnequip} variant="ghost" />}
+        {canEquip && <TooltipButton label="Надеть" onClick={onEquip} variant="primary" />}
+        {canUse && <TooltipButton label="Использовать" onClick={onUse} variant="primary" />}
+        {!equipped && <TooltipButton label="Выбросить" onClick={onDrop} variant="danger" />}
       </div>
     </div>
   );

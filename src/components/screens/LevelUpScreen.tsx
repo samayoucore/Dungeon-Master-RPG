@@ -59,14 +59,14 @@ export default function LevelUpScreen({ info, onClose }: LevelUpScreenProps) {
           ))}
         </div>
 
-        <h2 className="levelup-glow relative font-serif text-5xl font-bold text-gold">LEVEL UP</h2>
+        <h2 className="levelup-glow relative font-serif text-5xl font-bold text-gold">ПОВЫШЕНИЕ</h2>
         <div className="relative mt-2 text-xl text-parchment">
           {info.oldLevel} → <span className="text-gold">{info.newLevel}</span>
         </div>
 
         <div className="relative my-4">
           <div className="text-2xl font-bold text-[#16a34a]">+{info.hpGained} HP</div>
-          <div className="text-xs text-muted">Max HP: {info.oldMaxHp} → {info.newMaxHp}</div>
+          <div className="text-xs text-muted">Макс. HP: {info.oldMaxHp} → {info.newMaxHp}</div>
         </div>
 
         {info.features.length > 0 && (
@@ -81,7 +81,7 @@ export default function LevelUpScreen({ info, onClose }: LevelUpScreenProps) {
 
         {info.newProf > info.oldProf && (
           <div className="relative mb-4 text-sm text-gold">
-            Proficiency Bonus: +{info.oldProf} → +{info.newProf}
+            Бонус владения: +{info.oldProf} → +{info.newProf}
           </div>
         )}
 
@@ -91,7 +91,7 @@ export default function LevelUpScreen({ info, onClose }: LevelUpScreenProps) {
           onClick={onClose}
           className="relative w-full rounded-md bg-gold px-4 py-3 font-semibold text-dungeon transition-colors hover:bg-gold/90"
         >
-          Continue Your Adventure
+          Продолжить приключение
         </button>
       </motion.div>
     </div>

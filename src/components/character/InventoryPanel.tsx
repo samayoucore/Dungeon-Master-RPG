@@ -6,15 +6,15 @@ import { RARITY_DOT } from './itemMeta';
 import ItemTooltip from './ItemTooltip';
 
 const SLOTS: { slot: EquipmentSlot; label: string; icon: string }[] = [
-  { slot: 'head', label: 'Head', icon: '🪖' },
-  { slot: 'amulet', label: 'Amulet', icon: '📿' },
-  { slot: 'body', label: 'Body', icon: '👘' },
-  { slot: 'ring1', label: 'Ring', icon: '💍' },
-  { slot: 'hands', label: 'Hands', icon: '🧤' },
-  { slot: 'ring2', label: 'Ring', icon: '💍' },
-  { slot: 'legs', label: 'Legs', icon: '👢' },
-  { slot: 'mainHand', label: 'Main', icon: '⚔️' },
-  { slot: 'offHand', label: 'Off', icon: '🛡' },
+  { slot: 'head', label: 'Голова', icon: '🪖' },
+  { slot: 'amulet', label: 'Амулет', icon: '📿' },
+  { slot: 'body', label: 'Тело', icon: '👘' },
+  { slot: 'ring1', label: 'Кольцо', icon: '💍' },
+  { slot: 'hands', label: 'Руки', icon: '🧤' },
+  { slot: 'ring2', label: 'Кольцо', icon: '💍' },
+  { slot: 'legs', label: 'Ноги', icon: '👢' },
+  { slot: 'mainHand', label: 'Осн.', icon: '⚔️' },
+  { slot: 'offHand', label: 'Доп.', icon: '🛡' },
 ];
 
 interface Selected {
@@ -50,7 +50,7 @@ export default function InventoryPanel() {
     if (potion?.effect === 'heal') {
       const healed = roll(`${potion.diceCount ?? 1}d${(potion.diceType ?? 'd4').slice(1)}+${potion.bonus ?? 0}`);
       updateHp(healed);
-      addNarrative(`You drink the ${item.name} and recover ${healed} HP.`, 'loot');
+      addNarrative(`Ты выпиваешь ${item.name} и восстанавливаешь ${healed} HP.`, 'loot');
     }
     removeItem(item.id);
     setSelected(null);
@@ -59,7 +59,7 @@ export default function InventoryPanel() {
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-3">
       <div>
-        <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted">Equipment</h3>
+        <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted">Снаряжение</h3>
         <div className="grid grid-cols-2 gap-2">
           {SLOTS.map(({ slot, label, icon }) => {
             const item = equipped[slot];
@@ -80,9 +80,9 @@ export default function InventoryPanel() {
       </div>
 
       <div>
-        <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted">Bag ({inventory.length})</h3>
+        <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted">Сумка ({inventory.length})</h3>
         {inventory.length === 0 ? (
-          <p className="text-xs text-muted">Your bag is empty.</p>
+          <p className="text-xs text-muted">Сумка пуста.</p>
         ) : (
           <div className="grid grid-cols-4 gap-2">
             {inventory.map((item) => (
@@ -115,8 +115,8 @@ export default function InventoryPanel() {
 
       <div className="mt-auto">
         <div className="mb-1 flex justify-between text-[11px] text-muted">
-          <span>Weight</span>
-          <span>{weight.toFixed(0)} / {maxWeight} lb</span>
+          <span>Вес</span>
+          <span>{weight.toFixed(0)} / {maxWeight} фнт</span>
         </div>
         <div className="h-1.5 overflow-hidden rounded-full bg-dungeon">
           <div className={`h-full rounded-full transition-all ${weightPct > 80 ? 'bg-danger' : 'bg-gold'}`} style={{ width: `${weightPct}%` }} />

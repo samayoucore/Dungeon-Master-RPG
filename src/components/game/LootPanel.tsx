@@ -74,16 +74,14 @@ export default function LootPanel({ loot, onClose }: LootPanelProps) {
         animate={{ scale: 1, opacity: 1 }}
         className="w-full max-w-sm rounded-xl border border-gold/40 bg-surface p-6 text-center"
       >
-        <h2 className="font-serif text-2xl text-gold">Victory!</h2>
-        <p className="mb-4 text-sm text-muted">
-          You defeated {loot.enemyCount} {loot.enemyCount === 1 ? 'enemy' : 'enemies'}
-        </p>
+        <h2 className="font-serif text-2xl text-gold">Победа!</h2>
+        <p className="mb-4 text-sm text-muted">Повержено противников: {loot.enemyCount}</p>
 
-        <div className="mb-3 text-3xl font-bold text-gold">+{xpShown} XP</div>
-        {leveledUp && <div className="crit-pulse mb-3 font-serif text-lg text-gold">LEVEL UP available!</div>}
+        <div className="mb-3 text-3xl font-bold text-gold">+{xpShown} опыта</div>
+        {leveledUp && <div className="crit-pulse mb-3 font-serif text-lg text-gold">Доступно повышение уровня!</div>}
         {loot.gold > 0 && (
           <div className="mb-4 flex items-center justify-center gap-1 text-parchment">
-            <Coins className="h-4 w-4 text-gold" /> +{loot.gold} gp
+            <Coins className="h-4 w-4 text-gold" /> +{loot.gold} зол.
           </div>
         )}
 
@@ -104,7 +102,7 @@ export default function LootPanel({ loot, onClose }: LootPanelProps) {
             onClick={takeAll}
             className="w-full rounded-md bg-gold px-4 py-2 font-semibold text-dungeon transition-colors hover:bg-gold/90"
           >
-            Take All
+            Забрать всё
           </button>
         ) : (
           <button
@@ -112,7 +110,7 @@ export default function LootPanel({ loot, onClose }: LootPanelProps) {
             onClick={onClose}
             className="w-full rounded-md bg-gold px-4 py-2 font-semibold text-dungeon transition-colors hover:bg-gold/90"
           >
-            Continue
+            Продолжить
           </button>
         )}
       </motion.div>

@@ -65,17 +65,17 @@ export default function NarrativeLog({ onTypingChange }: NarrativeLogProps) {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex shrink-0 items-center justify-between border-b border-surface-elevated px-3 py-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted">Chronicle</span>
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted">Хроника</span>
         <button
           type="button"
           onClick={() => clearNarrative()}
           className="flex items-center gap-1 text-xs text-muted transition-colors hover:text-gold"
         >
-          <Eraser className="h-3 w-3" /> Clear
+          <Eraser className="h-3 w-3" /> Очистить
         </button>
       </div>
       <div ref={scrollRef} onScroll={handleScroll} className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-3">
-        {entries.length === 0 && <p className="text-sm text-muted">The dungeon awaits your story…</p>}
+        {entries.length === 0 && <p className="text-sm text-muted">Подземелье ждёт твою историю…</p>}
         {entries.map((entry, index) => (
           <div key={entry.id} className="border-b border-surface-elevated/40 pb-2 last:border-0">
             <p className={`${entryClass(entry.type)} whitespace-pre-line`}>

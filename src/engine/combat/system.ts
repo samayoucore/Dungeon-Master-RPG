@@ -41,44 +41,44 @@ const COWARD_FLEE_THRESHOLD = 0.3;
 // --- Combat flavour text ---
 
 const FUMBLES = [
-  'You swing wildly and nearly drop your weapon.',
-  'Your foot slips on the stone — the blow goes nowhere.',
-  'You overcommit and stumble, leaving yourself exposed.',
-  'The attack twists in your grip and whistles past harmlessly.',
-  'You misjudge the distance and strike only empty air.',
+  'Ты замахиваешься слишком широко и едва не роняешь оружие.',
+  'Нога скользит по камню — удар уходит в никуда.',
+  'Ты теряешь равновесие и открываешься для ответного удара.',
+  'Оружие проворачивается в руке и со свистом рассекает воздух.',
+  'Ты неверно оцениваешь расстояние и бьёшь по пустоте.',
 ];
 const MISSES = [
-  "Your attack glances off the {enemy}'s defenses.",
-  'The {enemy} sidesteps your blow.',
-  'You strike, but the {enemy} twists away in time.',
-  'Your weapon meets only the space where the {enemy} stood.',
+  '{enemy} отбивает твой удар.',
+  '{enemy} уворачивается в сторону.',
+  '{enemy} успевает отскочить от клинка.',
+  'Клинок рассекает пустоту.',
 ];
 const HITS = [
-  'You strike the {enemy} for {damage} damage.',
-  'Your blow lands true — {damage} damage to the {enemy}.',
-  'You catch the {enemy} hard, dealing {damage} damage.',
-  'A clean hit! The {enemy} takes {damage} damage.',
+  '{enemy} получает {damage} урона от твоего удара.',
+  '{enemy} теряет {damage} HP от точного удара.',
+  '{enemy} принимает {damage} урона — чистое попадание!',
+  'Ты крепко достаёшь врага: {damage} урона.',
 ];
 const CRITS = [
-  'Critical hit! You find a vital spot — {damage} damage!',
-  'A devastating strike! The {enemy} reels — {damage} damage!',
-  'Perfectly placed! You tear into the {enemy} for {damage} damage!',
-  'Critical! Your blow bites deep — {damage} damage!',
+  'Критический удар! Ты находишь уязвимое место — {damage} урона!',
+  'Сокрушительный выпад! {enemy} содрогается — {damage} урона!',
+  'Точно в цель! Ты разрываешь врага на {damage} урона!',
+  'Крит! Удар входит глубоко — {damage} урона!',
 ];
 const ENEMY_DEATHS = [
-  'The {enemy} collapses, lifeless.',
-  'With a final shudder, the {enemy} falls.',
-  'The {enemy} crumples to the floor, defeated.',
+  '{enemy} замертво оседает на пол.',
+  '{enemy} падает с последним содроганием.',
+  '{enemy} рушится на пол, повержен.',
 ];
 const ENEMY_HITS = [
-  'The {enemy} strikes you for {damage} damage.',
-  'You fail to dodge — the {enemy} deals {damage} damage.',
-  "The {enemy}'s attack lands, costing you {damage} damage.",
+  '{enemy} наносит тебе {damage} урона.',
+  '{enemy} застаёт тебя врасплох — {damage} урона.',
+  '{enemy} достаёт тебя, отнимая {damage} HP.',
 ];
 const ENEMY_MISSES = [
-  'The {enemy} lunges, but you turn the blow aside.',
-  "You parry the {enemy}'s attack just in time.",
-  'The {enemy} swings and misses.',
+  '{enemy} бросается вперёд, но ты отводишь удар.',
+  '{enemy} замахивается и промахивается.',
+  'Ты вовремя парируешь выпад врага.',
 ];
 
 function pick<T>(items: readonly T[]): T {
@@ -128,7 +128,7 @@ export function playerAttack(
   weaponDamage: string,
   weaponAttackBonus: number,
 ): TurnResult {
-  const enemy = targetEnemy.name.toLowerCase();
+  const enemy = targetEnemy.name;
   const blessed = character.statusEffects.some((e) => e.type === 'blessed');
   const bonus = weaponAttackBonus + (blessed ? rollRaw(4) : 0);
   const attack = checkHit(bonus, targetEnemy.ac);
@@ -155,7 +155,7 @@ export function playerAttack(
 
 export function playerDodge(_character: Character): TurnResult {
   return {
-    narrative: 'You take a defensive stance. Attacks against you have disadvantage this round.',
+    narrative: 'Ты встаёшь в защитную стойку. В этом раунде атаки по тебе — с помехой.',
     damageDealt: 0,
     damageTaken: 0,
     combatEnded: false,
@@ -165,18 +165,18 @@ export function playerDodge(_character: Character): TurnResult {
 export function playerFlee(character: Character, _room: Room): TurnResult {
   const check = rollRaw(20) + character.modifiers.dex;
   if (check >= FLEE_DC) {
-    return { narrative: 'You break away and escape into the dark!', damageDealt: 0, damageTaken: 0, combatEnded: true, playerWon: false };
+    return { narrative: 'Ты вырываешься и исчезаешь во тьме!', damageDealt: 0, damageTaken: 0, combatEnded: true, playerWon: false };
   }
-  return { narrative: 'You try to flee but the enemy blocks your path!', damageDealt: 0, damageTaken: 0, combatEnded: false };
+  return { narrative: 'Ты пытаешься сбежать, но враг преграждает путь!', damageDealt: 0, damageTaken: 0, combatEnded: false };
 }
 
 export function playerUseItem(_character: Character, item: Item, _targetEnemyId?: string): TurnResult {
   const effect = item.potionEffect;
   if (item.type === 'potion' && effect?.effect === 'heal') {
     const healed = roll(damageExpr(effect.diceCount ?? 1, effect.diceType ?? 'd4', effect.bonus ?? 0));
-    return { narrative: `You drink the ${item.name} and recover ${healed} HP.`, damageDealt: 0, damageTaken: -healed, combatEnded: false };
+    return { narrative: `Ты выпиваешь ${item.name} и восстанавливаешь ${healed} HP.`, damageDealt: 0, damageTaken: -healed, combatEnded: false };
   }
-  return { narrative: 'Nothing happens.', damageDealt: 0, damageTaken: 0, combatEnded: false };
+  return { narrative: 'Ничего не происходит.', damageDealt: 0, damageTaken: 0, combatEnded: false };
 }
 
 // ---------------------------------------------------------------------------
@@ -195,22 +195,22 @@ export function resolveEnemyAction(
   isDodging: boolean,
   allies?: Enemy[],
 ): TurnResult {
-  const name = enemy.name.toLowerCase();
+  const name = enemy.name;
   const hpFraction = enemy.maxHp > 0 ? enemy.hp / enemy.maxHp : 1;
 
   // Cowards disengage or flee outright when hurt.
   if (enemy.behavior === 'coward') {
     if (hpFraction < COWARD_FLEE_THRESHOLD) {
-      return { narrative: `The ${name} flees in terror!`, damageDealt: 0, damageTaken: 0, killedEnemyId: enemy.id, combatEnded: false };
+      return { narrative: `${name} в ужасе обращается в бегство!`, damageDealt: 0, damageTaken: 0, killedEnemyId: enemy.id, combatEnded: false };
     }
     if (hpFraction < COWARD_HOLD_THRESHOLD) {
-      return { narrative: `The ${name} cowers and retreats!`, damageDealt: 0, damageTaken: 0, combatEnded: false };
+      return { narrative: `${name} трусливо съёживается и отступает!`, damageDealt: 0, damageTaken: 0, combatEnded: false };
     }
   }
 
   // Tacticians sometimes pull back when wounded.
   if (enemy.behavior === 'tactical' && hpFraction < TACTICAL_RETREAT_THRESHOLD && chance(createRng(randomSeed()), 0.5)) {
-    return { narrative: `The ${name} retreats to a safer position.`, damageDealt: 0, damageTaken: 0, combatEnded: false };
+    return { narrative: `${name} отходит на безопасную позицию.`, damageDealt: 0, damageTaken: 0, combatEnded: false };
   }
 
   // Support casters mend a wounded ally instead of attacking (flavour for now).
@@ -218,7 +218,7 @@ export function resolveEnemyAction(
     const wounded = allies.find((a) => a.id !== enemy.id && a.hp > 0 && a.hp / a.maxHp < 0.5);
     if (wounded) {
       return {
-        narrative: `The ${name} chants a dark incantation, mending the ${wounded.name.toLowerCase()}'s wounds.`,
+        narrative: `${name} читает тёмное заклинание, и раны союзника затягиваются.`,
         damageDealt: 0,
         damageTaken: 0,
         combatEnded: false,
@@ -233,7 +233,7 @@ export function resolveEnemyAction(
   if (enemy.behavior === 'berserker' && hpFraction < BERSERK_THRESHOLD) {
     attackBonus = 2;
     damageBonus = 2;
-    prefix = `The ${name} lets out a furious roar and attacks with wild abandon! `;
+    prefix = `${name} испускает яростный рёв и атакует с безудержной свирепостью! `;
   }
 
   // Tacticians favour their biggest attack; others pick at random.
@@ -268,26 +268,26 @@ export function tickStatusEffects(character: Character): { character: Character;
       case 'poisoned': {
         const n = roll('1d4');
         hp -= n;
-        log.push(`Poison courses through your veins — ${n} damage.`);
+        log.push(`Яд растекается по венам — ${n} урона.`);
         break;
       }
       case 'bleeding': {
         const n = roll('1d4');
         hp -= n;
-        log.push(`Your wounds seep blood — ${n} damage.`);
+        log.push(`Раны кровоточат — ${n} урона.`);
         break;
       }
       case 'burning': {
         const n = roll('1d4');
         hp -= n;
-        log.push(`Flames lick at you — ${n} damage.`);
+        log.push(`Пламя лижет тебя — ${n} урона.`);
         if (Math.random() < 0.3) keep = false;
         break;
       }
       case 'stunned': {
         skipTurn = true;
         keep = false;
-        log.push('You are stunned and cannot act.');
+        log.push('Ты оглушён и не можешь действовать.');
         break;
       }
       default:

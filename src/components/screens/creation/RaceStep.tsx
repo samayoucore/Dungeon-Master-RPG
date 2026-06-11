@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import type { CharacterRace, Stats } from '../../../types';
-import { RACES, RACE_BY_ID, STAT_KEYS } from '../../../engine/character/data';
+import { RACES, RACE_BY_ID, STAT_ABBR, STAT_KEYS } from '../../../engine/character/data';
 import { formatModifier } from '../../../engine/character/creation';
 import SelectableCard from './SelectableCard';
 
@@ -12,9 +12,9 @@ interface RaceStepProps {
 /** Render a race's ability bonuses, e.g. "+2 DEX, +1 INT" or "+1 to all". */
 function bonusText(bonuses: Partial<Stats>): string {
   const parts = STAT_KEYS.filter((key) => bonuses[key]).map(
-    (key) => `${formatModifier(bonuses[key] ?? 0)} ${key.toUpperCase()}`,
+    (key) => `${formatModifier(bonuses[key] ?? 0)} ${STAT_ABBR[key]}`,
   );
-  return parts.length === STAT_KEYS.length ? '+1 to all abilities' : parts.join(', ');
+  return parts.length === STAT_KEYS.length ? '+1 ко всем характеристикам' : parts.join(', ');
 }
 
 export default function RaceStep({ selected, onSelect }: RaceStepProps) {
@@ -22,7 +22,7 @@ export default function RaceStep({ selected, onSelect }: RaceStepProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-center font-serif text-4xl text-gold">Choose Your Race</h2>
+      <h2 className="text-center font-serif text-4xl text-gold">Выбери расу</h2>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {RACES.map((race) => (
           <SelectableCard

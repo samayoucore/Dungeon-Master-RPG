@@ -1,6 +1,6 @@
 // ============================================================================
-// Static character-creation data: races, classes, backgrounds, names, point-buy.
-// Pure data only — no React, no logic. Consumed by creation.ts and the wizard UI.
+// Static character-creation data (Russian): races, classes, backgrounds,
+// names, point-buy. Pure data only — no React, no logic.
 // ============================================================================
 
 import type {
@@ -30,13 +30,23 @@ export interface StatInfo {
 }
 
 export const STATS_INFO: StatInfo[] = [
-  { key: 'str', abbr: 'STR', name: 'Strength', hint: 'Melee attacks, carrying capacity' },
-  { key: 'dex', abbr: 'DEX', name: 'Dexterity', hint: 'Armor class, initiative, ranged' },
-  { key: 'con', abbr: 'CON', name: 'Constitution', hint: 'Hit points and stamina' },
-  { key: 'int', abbr: 'INT', name: 'Intelligence', hint: 'Arcane spells and lore' },
-  { key: 'wis', abbr: 'WIS', name: 'Wisdom', hint: 'Divine spells and perception' },
-  { key: 'cha', abbr: 'CHA', name: 'Charisma', hint: 'Social skills, bardic magic' },
+  { key: 'str', abbr: 'СИЛ', name: 'Сила', hint: 'Ближний бой, переносимый вес' },
+  { key: 'dex', abbr: 'ЛОВ', name: 'Ловкость', hint: 'КБ, инициатива, дальний бой' },
+  { key: 'con', abbr: 'ТЕЛ', name: 'Телосложение', hint: 'Здоровье и выносливость' },
+  { key: 'int', abbr: 'ИНТ', name: 'Интеллект', hint: 'Арканная магия и знания' },
+  { key: 'wis', abbr: 'МДР', name: 'Мудрость', hint: 'Божественная магия, внимательность' },
+  { key: 'cha', abbr: 'ХАР', name: 'Харизма', hint: 'Социальные навыки, магия барда' },
 ];
+
+/** Short Russian abbreviation per ability (for class priority hints). */
+export const STAT_ABBR: Record<StatKey, string> = {
+  str: 'СИЛ',
+  dex: 'ЛОВ',
+  con: 'ТЕЛ',
+  int: 'ИНТ',
+  wis: 'МДР',
+  cha: 'ХАР',
+};
 
 // ---------------------------------------------------------------------------
 // Point buy
@@ -82,57 +92,57 @@ export interface RaceData {
 export const RACES: RaceData[] = [
   {
     id: 'human',
-    name: 'Human',
+    name: 'Человек',
     icon: '🧑',
     bonuses: { str: 1, dex: 1, con: 1, int: 1, wis: 1, cha: 1 },
-    traits: ['Versatile'],
+    traits: ['Универсальность'],
     description:
-      'Ambitious and adaptable, humans master no single art but bend every path to their will. A bonus to all abilities suits them to any calling.',
+      'Честолюбивые и приспособляемые, люди не мастера в чём-то одном, но любой путь сгибают под себя. Бонус ко всем характеристикам подходит для любого класса.',
   },
   {
     id: 'elf',
-    name: 'Elf',
+    name: 'Эльф',
     icon: '🧝',
     bonuses: { dex: 2, int: 1 },
-    traits: ['Darkvision', 'Fey Ancestry'],
+    traits: ['Тёмное зрение', 'Фейское наследие'],
     description:
-      'Graceful and long-lived, elves move with uncanny precision. Keen senses and an agile body favour scouts, archers and arcane tricksters.',
+      'Грациозные и долгоживущие, эльфы движутся с неестественной точностью. Острые чувства и гибкое тело хороши для разведчиков, лучников и арканных ловкачей.',
   },
   {
     id: 'dwarf',
-    name: 'Dwarf',
+    name: 'Дварф',
     icon: '🧔',
     bonuses: { con: 2, wis: 1 },
-    traits: ['Darkvision', 'Dwarven Resilience'],
+    traits: ['Тёмное зрение', 'Дварфская стойкость'],
     description:
-      'Stout, stubborn folk of stone and forge. Their resilience and hardy constitution let them outlast almost any foe in a war of attrition.',
+      'Крепкий, упрямый народ камня и кузни. Стойкость и могучее телосложение позволяют им пережить почти любого врага в войне на истощение.',
   },
   {
     id: 'halfling',
-    name: 'Halfling',
+    name: 'Полурослик',
     icon: '🧒',
     bonuses: { dex: 2, cha: 1 },
-    traits: ['Lucky', 'Brave'],
+    traits: ['Везучесть', 'Храбрость'],
     description:
-      'Small, nimble and improbably lucky. Halflings slip through danger with a grin, turning near-disasters into fortunate escapes.',
+      'Маленькие, проворные и невероятно везучие. Полурослики ускользают от опасности с усмешкой, обращая беды в счастливые случайности.',
   },
   {
     id: 'half-orc',
-    name: 'Half-Orc',
+    name: 'Полуорк',
     icon: '👹',
     bonuses: { str: 2, con: 1 },
-    traits: ['Darkvision', 'Relentless Endurance'],
+    traits: ['Тёмное зрение', 'Неумолимая стойкость'],
     description:
-      'Born of two worlds and at home in neither, half-orcs channel fury into raw power. They refuse to fall while a single breath remains.',
+      'Рождённые двумя мирами и чужие обоим, полуорки обращают ярость в чистую силу. Они отказываются падать, пока в них остаётся хоть один вздох.',
   },
   {
     id: 'tiefling',
-    name: 'Tiefling',
+    name: 'Тифлинг',
     icon: '😈',
     bonuses: { cha: 2, int: 1 },
-    traits: ['Darkvision', 'Hellish Resistance'],
+    traits: ['Тёмное зрение', 'Адское сопротивление'],
     description:
-      'Marked by an infernal bloodline, tieflings carry an unsettling charm and resistance to flame. Distrusted by many, they forge their own fortune.',
+      'Отмеченные инфернальной кровью, тифлинги несут тревожное обаяние и стойкость к пламени. Многими гонимые, они куют собственную судьбу.',
   },
 ];
 
@@ -158,79 +168,79 @@ export interface ClassData {
 export const CLASSES: ClassData[] = [
   {
     id: 'fighter',
-    name: 'Fighter',
+    name: 'Воин',
     icon: '⚔️',
     hitDie: 10,
     primary: ['str', 'con'],
-    feature: 'Second Wind',
-    featureDesc: 'Heal 1d10 + level once per rest.',
+    feature: 'Второе дыхание',
+    featureDesc: 'Лечит 1к10 + уровень раз за отдых.',
     description:
-      'A master of weapons and armour who wins through discipline and staying power. Fighters hit hard, take hits harder, and rarely run short of stamina.',
+      'Мастер оружия и доспеха, побеждающий дисциплиной и выносливостью. Воины бьют крепко, держат удар ещё крепче и редко выдыхаются.',
     startingGold: 10,
     isCaster: false,
   },
   {
     id: 'rogue',
-    name: 'Rogue',
+    name: 'Плут',
     icon: '🗡️',
     hitDie: 8,
     primary: ['dex'],
-    feature: 'Sneak Attack',
-    featureDesc: 'Deal an extra 1d6 when you strike from advantage.',
+    feature: 'Скрытая атака',
+    featureDesc: '+1к6 урона при ударе с преимуществом.',
     description:
-      'A precise opportunist who turns a single opening into a lethal blow. Rogues thrive on stealth, traps and finding the soft spot in any defence.',
+      'Точный оппортунист, обращающий одну брешь в смертельный удар. Плуты процветают на скрытности, ловушках и поиске слабых мест в любой защите.',
     startingGold: 15,
     isCaster: false,
   },
   {
     id: 'wizard',
-    name: 'Wizard',
+    name: 'Волшебник',
     icon: '🪄',
     hitDie: 6,
     primary: ['int'],
-    feature: 'Spellcasting',
-    featureDesc: 'Cast arcane spells; refill slots with Arcane Recovery.',
+    feature: 'Заклинания',
+    featureDesc: 'Арканные заклинания; восстановление ячеек Магическим восстановлением.',
     description:
-      'A scholar of the arcane who bends reality through study. Fragile in body but devastating in the right moment, the wizard wields the widest spell list of all.',
+      'Знаток арканного, сгибающий реальность через учёбу. Хрупкий телом, но сокрушительный в нужный миг — волшебник владеет самым широким списком заклинаний.',
     startingGold: 10,
     isCaster: true,
   },
   {
     id: 'cleric',
-    name: 'Cleric',
+    name: 'Жрец',
     icon: '✨',
     hitDie: 8,
     primary: ['wis'],
-    feature: 'Spellcasting',
-    featureDesc: 'Channel divine spells granted by a Divine Domain.',
+    feature: 'Заклинания',
+    featureDesc: 'Божественные заклинания, дарованные Доменом.',
     description:
-      'A holy warrior-priest who heals allies and smites the unworthy. Clerics blend solid armour with divine magic, thriving at the heart of any party.',
+      'Святой воин-жрец, что лечит союзников и карает недостойных. Жрецы сочетают крепкий доспех с божественной магией и сильны в сердце любого отряда.',
     startingGold: 10,
     isCaster: true,
   },
   {
     id: 'ranger',
-    name: 'Ranger',
+    name: 'Следопыт',
     icon: '🏹',
     hitDie: 10,
     primary: ['dex', 'wis'],
-    feature: 'Favored Enemy',
-    featureDesc: 'Track prey and survive the wilds as a Natural Explorer.',
+    feature: 'Избранный враг',
+    featureDesc: 'Выслеживай добычу и выживай в дикости как Естествоиспытатель.',
     description:
-      'A hunter of the borderlands, equally deadly with bow and blade. Rangers read the land, mark their quarry, and rarely lose a trail once they catch it.',
+      'Охотник приграничья, равно смертоносный с луком и клинком. Следопыты читают местность, метят добычу и редко теряют след.',
     startingGold: 10,
     isCaster: false,
   },
   {
     id: 'bard',
-    name: 'Bard',
+    name: 'Бард',
     icon: '🎵',
     hitDie: 8,
     primary: ['cha'],
-    feature: 'Bardic Inspiration',
-    featureDesc: 'Grant allies a d6 boost; cast versatile spells.',
+    feature: 'Бардовское вдохновение',
+    featureDesc: 'Дай союзникам бонус к6; твори разнообразные заклинания.',
     description:
-      'A charismatic jack-of-all-trades whose magic flows through performance. Bards inspire allies, charm foes and dabble in a little of everything.',
+      'Обаятельный мастер на все руки, чья магия течёт через искусство. Барды вдохновляют союзников, очаровывают врагов и понемногу умеют всё.',
     startingGold: 15,
     isCaster: true,
   },
@@ -255,20 +265,20 @@ export interface StartItemSpec {
 }
 
 const LEATHER_ARMOR: StartItemSpec = {
-  name: 'Leather Armor',
+  name: 'Кожаный доспех',
   type: 'armor',
   icon: '🥋',
-  description: 'Supple boiled leather. AC 11 + DEX modifier.',
+  description: 'Мягкая варёная кожа. КБ 11 + модификатор Ловкости.',
   weight: 10,
   value: 10,
   armorStats: { baseAc: 11, slot: 'body' },
 };
 
 const CHAIN_MAIL: StartItemSpec = {
-  name: 'Chain Mail',
+  name: 'Кольчуга',
   type: 'armor',
   icon: '🛡️',
-  description: 'Heavy interlocking rings. Sets AC to 16.',
+  description: 'Тяжёлые сцепленные кольца. КБ 16.',
   weight: 55,
   value: 75,
   armorStats: { baseAc: 16, maxDexBonus: 0, slot: 'body' },
@@ -277,20 +287,20 @@ const CHAIN_MAIL: StartItemSpec = {
 export const STARTING_INVENTORY: Record<CharacterClass, StartItemSpec[]> = {
   fighter: [
     {
-      name: 'Longsword',
+      name: 'Длинный меч',
       type: 'weapon',
       icon: '🗡️',
-      description: 'A versatile blade. 1d8 slashing damage.',
+      description: 'Универсальный клинок. 1к8 рубящего урона.',
       weight: 3,
       value: 15,
       weaponStats: { damageDice: 'd8', damageCount: 1, damageBonus: 0, damageType: 'slashing' },
     },
     CHAIN_MAIL,
     {
-      name: 'Shield',
+      name: 'Щит',
       type: 'shield',
       icon: '🛡️',
-      description: 'A sturdy shield. +2 AC when equipped.',
+      description: 'Крепкий щит. +2 КБ, когда надет.',
       weight: 6,
       value: 10,
       armorStats: { baseAc: 2, slot: 'offHand' },
@@ -298,75 +308,75 @@ export const STARTING_INVENTORY: Record<CharacterClass, StartItemSpec[]> = {
   ],
   rogue: [
     {
-      name: 'Shortsword',
+      name: 'Короткий меч',
       type: 'weapon',
       icon: '🗡️',
-      description: 'A light finesse blade. 1d6 piercing damage.',
+      description: 'Лёгкий фехтовальный клинок. 1к6 колющего урона.',
       weight: 2,
       value: 10,
       weaponStats: { damageDice: 'd6', damageCount: 1, damageBonus: 0, damageType: 'piercing', finesse: true },
     },
     LEATHER_ARMOR,
     {
-      name: "Thieves' Tools",
+      name: 'Воровские инструменты',
       type: 'misc',
       icon: '🛠️',
-      description: 'Picks and probes for locks and traps.',
+      description: 'Отмычки и щупы для замков и ловушек.',
       weight: 1,
       value: 25,
     },
   ],
   wizard: [
     {
-      name: 'Quarterstaff',
+      name: 'Боевой посох',
       type: 'weapon',
       icon: '🪄',
-      description: 'A simple staff. 1d6 bludgeoning damage.',
+      description: 'Простой посох. 1к6 дробящего урона.',
       weight: 4,
       value: 2,
       weaponStats: { damageDice: 'd6', damageCount: 1, damageBonus: 0, damageType: 'bludgeoning' },
     },
-    { name: 'Spellbook', type: 'misc', icon: '📖', description: 'Your arcane tome of known spells.', weight: 3, value: 50 },
-    { name: 'Component Pouch', type: 'misc', icon: '🎒', description: 'Material components for spellcasting.', weight: 2, value: 25 },
+    { name: 'Книга заклинаний', type: 'misc', icon: '📖', description: 'Твой арканный том известных заклинаний.', weight: 3, value: 50 },
+    { name: 'Мешочек с компонентами', type: 'misc', icon: '🎒', description: 'Материальные компоненты для заклинаний.', weight: 2, value: 25 },
   ],
   cleric: [
     {
-      name: 'Mace',
+      name: 'Булава',
       type: 'weapon',
       icon: '🔨',
-      description: 'A blunt instrument of faith. 1d6 bludgeoning damage.',
+      description: 'Тупое орудие веры. 1к6 дробящего урона.',
       weight: 4,
       value: 5,
       weaponStats: { damageDice: 'd6', damageCount: 1, damageBonus: 0, damageType: 'bludgeoning' },
     },
     CHAIN_MAIL,
-    { name: 'Holy Symbol', type: 'misc', icon: '✨', description: 'A divine focus for channeling miracles.', weight: 1, value: 5 },
+    { name: 'Священный символ', type: 'misc', icon: '✨', description: 'Божественная фокусировка для сотворения чудес.', weight: 1, value: 5 },
   ],
   ranger: [
     {
-      name: 'Longbow',
+      name: 'Длинный лук',
       type: 'weapon',
       icon: '🏹',
-      description: 'A tall bow with long range. 1d8 piercing damage.',
+      description: 'Высокий лук с большой дальностью. 1к8 колющего урона.',
       weight: 2,
       value: 50,
       weaponStats: { damageDice: 'd8', damageCount: 1, damageBonus: 0, damageType: 'piercing', ranged: true, twoHanded: true },
     },
-    { name: 'Quiver', type: 'misc', icon: '🎯', description: 'Holds 20 arrows.', weight: 1, value: 1 },
+    { name: 'Колчан', type: 'misc', icon: '🎯', description: 'Вмещает 20 стрел.', weight: 1, value: 1 },
     LEATHER_ARMOR,
   ],
   bard: [
     {
-      name: 'Rapier',
+      name: 'Рапира',
       type: 'weapon',
       icon: '🤺',
-      description: 'An elegant finesse blade. 1d8 piercing damage.',
+      description: 'Изящный фехтовальный клинок. 1к8 колющего урона.',
       weight: 2,
       value: 25,
       weaponStats: { damageDice: 'd8', damageCount: 1, damageBonus: 0, damageType: 'piercing', finesse: true },
     },
     LEATHER_ARMOR,
-    { name: 'Lute', type: 'misc', icon: '🎵', description: 'A fine instrument and spellcasting focus.', weight: 2, value: 35 },
+    { name: 'Лютня', type: 'misc', icon: '🎵', description: 'Прекрасный инструмент и фокусировка для заклинаний.', weight: 2, value: 35 },
   ],
 };
 
@@ -384,25 +394,25 @@ export interface BackgroundData {
 }
 
 export const BACKGROUNDS: BackgroundData[] = [
-  { id: 'soldier', name: 'Soldier', icon: '🎖️', skills: ['Athletics', 'Intimidation'], bonus: '+10 gold and a Military Rank that commands respect.', bonusGold: 10 },
-  { id: 'criminal', name: 'Criminal', icon: '🗝️', skills: ['Deception', 'Stealth'], bonus: "Thieves' Tools and a Criminal Contact in every town.", bonusGold: 0 },
-  { id: 'scholar', name: 'Scholar', icon: '📚', skills: ['History', 'Arcana'], bonus: 'Two extra languages and a spare spell scroll.', bonusGold: 0 },
-  { id: 'noble', name: 'Noble', icon: '👑', skills: ['History', 'Persuasion'], bonus: '+20 gold and a Signet Ring of your house.', bonusGold: 20 },
-  { id: 'folk-hero', name: 'Folk Hero', icon: '🌾', skills: ['Animal Handling', 'Survival'], bonus: "Artisan's Tools and fame among common villagers.", bonusGold: 0 },
-  { id: 'outlander', name: 'Outlander', icon: '🏔️', skills: ['Athletics', 'Survival'], bonus: 'A Musical Instrument and an unerring sense of the land.', bonusGold: 0 },
+  { id: 'soldier', name: 'Солдат', icon: '🎖️', skills: ['Атлетика', 'Запугивание'], bonus: '+10 золота и воинское звание, внушающее уважение.', bonusGold: 10 },
+  { id: 'criminal', name: 'Преступник', icon: '🗝️', skills: ['Обман', 'Скрытность'], bonus: 'Воровские инструменты и преступный связной в каждом городе.', bonusGold: 0 },
+  { id: 'scholar', name: 'Учёный', icon: '📚', skills: ['История', 'Магия'], bonus: 'Два дополнительных языка и запасной свиток.', bonusGold: 0 },
+  { id: 'noble', name: 'Дворянин', icon: '👑', skills: ['История', 'Убеждение'], bonus: '+20 золота и фамильный перстень с печатью.', bonusGold: 20 },
+  { id: 'folk-hero', name: 'Народный герой', icon: '🌾', skills: ['Уход за животными', 'Выживание'], bonus: 'Инструменты ремесленника и слава среди простого люда.', bonusGold: 0 },
+  { id: 'outlander', name: 'Чужеземец', icon: '🏔️', skills: ['Атлетика', 'Выживание'], bonus: 'Музыкальный инструмент и безошибочное чутьё на местность.', bonusGold: 0 },
 ];
 
 export const BACKGROUND_BY_ID = byId(BACKGROUNDS);
 
 // ---------------------------------------------------------------------------
-// Random names, per race (min 10 each)
+// Random names, per race (proper names, left untranslated)
 // ---------------------------------------------------------------------------
 
 export const NAMES: Record<CharacterRace, string[]> = {
-  human: ['Aldric', 'Mara', 'Cedric', 'Elena', 'Garrett', 'Rosalind', 'Tobias', 'Linnea', 'Roderick', 'Isolde', 'Bram', 'Cora'],
-  elf: ['Aelar', 'Sylvara', 'Thalion', 'Naivara', 'Erevan', 'Liriel', 'Caelynn', 'Faelar', 'Shanairra', 'Varis', 'Aramil', 'Mialee'],
-  dwarf: ['Thorin', 'Helga', 'Balin', 'Dagna', 'Gimli', 'Brunhild', 'Durin', 'Vistra', 'Harbek', 'Audhild', 'Orsik', 'Gunnloda'],
-  halfling: ['Pip', 'Rosie', 'Milo', 'Lavinia', 'Wenna', 'Cade', 'Seraphina', 'Osborn', 'Tilly', 'Roscoe', 'Merric', 'Nedda'],
-  'half-orc': ['Grosh', 'Yevelda', 'Mhurren', 'Shautha', 'Karg', 'Baggi', 'Thokk', 'Emen', 'Dench', 'Volen', 'Ront', 'Sutha'],
-  tiefling: ['Akmenos', 'Nemeia', 'Damaia', 'Mordai', 'Kallista', 'Skamos', 'Criella', 'Therai', 'Barakas', 'Rieta', 'Pelaios', 'Orianna'],
+  human: ['Альдрик', 'Мара', 'Седрик', 'Елена', 'Гаррет', 'Розалинда', 'Тобиас', 'Линнея', 'Родерик', 'Изольда', 'Брам', 'Кора'],
+  elf: ['Аэлар', 'Сильвара', 'Талион', 'Найвара', 'Эреван', 'Лириэль', 'Каэлинн', 'Фаэлар', 'Шанайра', 'Варис', 'Арамил', 'Миали'],
+  dwarf: ['Торин', 'Хельга', 'Балин', 'Дагна', 'Гимли', 'Брунхильда', 'Дурин', 'Вистра', 'Харбек', 'Аудхильда', 'Орсик', 'Гуннлода'],
+  halfling: ['Пип', 'Рози', 'Майло', 'Лавиния', 'Венна', 'Кейд', 'Серафина', 'Осборн', 'Тилли', 'Роско', 'Меррик', 'Недда'],
+  'half-orc': ['Грош', 'Йевельда', 'Мхуррен', 'Шаута', 'Карг', 'Багги', 'Токк', 'Эмен', 'Денч', 'Волен', 'Ронт', 'Сута'],
+  tiefling: ['Акменос', 'Немея', 'Дамайя', 'Мордай', 'Каллиста', 'Скамос', 'Криэлла', 'Терай', 'Баракас', 'Риета', 'Пелайос', 'Орианна'],
 };

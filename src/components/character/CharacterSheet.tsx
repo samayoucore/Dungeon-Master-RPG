@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Award, Coins, Shield, Zap } from 'lucide-react';
 import type { Character, CharacterClass, StatusEffectType } from '../../types';
-import { STATS_INFO } from '../../engine/character/data';
+import { CLASS_BY_ID, RACE_BY_ID, STATS_INFO } from '../../engine/character/data';
 import { formatModifier } from '../../engine/character/creation';
 
 interface CharacterSheetProps {
@@ -53,11 +53,11 @@ export default function CharacterSheet({ character }: CharacterSheetProps) {
         </div>
         <div className="min-w-0">
           <div className="truncate font-serif text-lg text-parchment">{character.name}</div>
-          <div className="text-xs capitalize text-muted">
-            Lv.{character.level} {character.race} {character.class}
+          <div className="text-xs text-muted">
+            Ур.{character.level} · {RACE_BY_ID[character.race].name} {CLASS_BY_ID[character.class].name}
           </div>
           <div className="flex items-center gap-1 text-xs text-gold">
-            <Coins className="h-3 w-3" /> {character.gold} gp
+            <Coins className="h-3 w-3" /> {character.gold} зол.
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@ export default function CharacterSheet({ character }: CharacterSheetProps) {
 
       <div>
         <div className="mb-1 flex justify-between text-xs text-muted">
-          <span>XP</span>
+          <span>Опыт</span>
           <span>{character.xp} / {character.xpToNext}</span>
         </div>
         <div className="h-1.5 overflow-hidden rounded-full bg-dungeon">
@@ -83,9 +83,9 @@ export default function CharacterSheet({ character }: CharacterSheetProps) {
       </div>
 
       <div className="grid grid-cols-3 gap-2">
-        <CombatStat icon={<Shield className="h-4 w-4" />} value={`${character.ac}`} label="AC" />
-        <CombatStat icon={<Zap className="h-4 w-4" />} value={formatModifier(character.modifiers.dex)} label="Init" />
-        <CombatStat icon={<Award className="h-4 w-4" />} value={formatModifier(character.proficiencyBonus)} label="Prof" />
+        <CombatStat icon={<Shield className="h-4 w-4" />} value={`${character.ac}`} label="КБ" />
+        <CombatStat icon={<Zap className="h-4 w-4" />} value={formatModifier(character.modifiers.dex)} label="Иниц" />
+        <CombatStat icon={<Award className="h-4 w-4" />} value={formatModifier(character.proficiencyBonus)} label="Влад" />
       </div>
 
       <div className="grid grid-cols-3 gap-2">

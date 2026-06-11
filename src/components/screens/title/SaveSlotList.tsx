@@ -10,6 +10,7 @@ import {
   listSaves,
 } from '../../../utils/save';
 import type { SaveSlot } from '../../../types';
+import { CLASS_BY_ID } from '../../../engine/character/data';
 
 interface SaveSlotListProps {
   onBack: () => void;
@@ -27,7 +28,7 @@ function SaveRow({ index, slot, onLoad, onDelete }: RowProps) {
   if (!slot) {
     return (
       <div className="flex h-[4.5rem] items-center justify-center rounded-lg border border-dashed border-surface-elevated text-sm text-muted">
-        Empty slot {index + 1}
+        Пустой слот {index + 1}
       </div>
     );
   }
@@ -42,8 +43,8 @@ function SaveRow({ index, slot, onLoad, onDelete }: RowProps) {
         <span className="text-3xl">{CLASS_ICONS[slot.characterClass]}</span>
         <span className="flex flex-col gap-0.5">
           <span className="font-serif text-lg text-parchment">{slot.characterName}</span>
-          <span className="text-xs capitalize text-muted">
-            {slot.characterClass} · Lv {slot.characterLevel} · Floor {slot.floor}
+          <span className="text-xs text-muted">
+            {CLASS_BY_ID[slot.characterClass].name} · Ур. {slot.characterLevel} · Этаж {slot.floor}
           </span>
           <span className="text-xs text-muted/80">
             {formatSaveDate(slot.savedAt)} · {formatPlaytime(slot.playtime)}
@@ -53,7 +54,7 @@ function SaveRow({ index, slot, onLoad, onDelete }: RowProps) {
       <button
         type="button"
         onClick={() => onDelete(index)}
-        aria-label={`Delete slot ${index + 1}`}
+        aria-label={`Удалить слот ${index + 1}`}
         className="text-muted opacity-0 transition group-hover:opacity-100 hover:text-danger"
       >
         <Trash2 className="h-5 w-5" />
@@ -80,7 +81,7 @@ export default function SaveSlotList({ onBack }: SaveSlotListProps) {
       transition={{ duration: 0.3 }}
       className="flex w-full max-w-md flex-col gap-5"
     >
-      <h2 className="text-center font-serif text-3xl text-gold">Load Game</h2>
+      <h2 className="text-center font-serif text-3xl text-gold">Загрузка</h2>
       <div className="flex flex-col gap-3">
         {saves.map((slot, index) => (
           <SaveRow
@@ -98,7 +99,7 @@ export default function SaveSlotList({ onBack }: SaveSlotListProps) {
         className="group mx-auto flex items-center gap-2 text-muted transition-colors hover:text-gold"
       >
         <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-        Back
+        Назад
       </button>
     </motion.div>
   );

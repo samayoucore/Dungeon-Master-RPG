@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import type { Character } from '../../../types';
 import { CLASS_ICONS } from '../../../utils/save';
-import { RACE_BY_ID, STARTING_INVENTORY, STATS_INFO } from '../../../engine/character/data';
+import { CLASS_BY_ID, RACE_BY_ID, STARTING_INVENTORY, STATS_INFO } from '../../../engine/character/data';
 import { formatModifier } from '../../../engine/character/creation';
 
 interface CharacterPreviewProps {
@@ -31,17 +31,17 @@ export default function CharacterPreview({ character }: CharacterPreviewProps) {
         <span className="text-4xl">{CLASS_ICONS[character.class]}</span>
         <div>
           <div className="font-serif text-2xl text-gold">{character.name}</div>
-          <div className="text-sm capitalize text-muted">
-            {RACE_BY_ID[character.race].name} {character.class} · Level {character.level}
+          <div className="text-sm text-muted">
+            {RACE_BY_ID[character.race].name}, {CLASS_BY_ID[character.class].name} · Уровень {character.level}
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-4 gap-2 py-3">
         <Vital label="HP" value={`${character.maxHp}`} />
-        <Vital label="AC" value={`${character.ac}`} />
-        <Vital label="Init" value={formatModifier(character.modifiers.dex)} />
-        <Vital label="Prof" value={formatModifier(character.proficiencyBonus)} />
+        <Vital label="КБ" value={`${character.ac}`} />
+        <Vital label="Иниц" value={formatModifier(character.modifiers.dex)} />
+        <Vital label="Влад" value={formatModifier(character.proficiencyBonus)} />
       </div>
 
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -56,8 +56,8 @@ export default function CharacterPreview({ character }: CharacterPreviewProps) {
 
       <div className="mt-3 border-t border-surface-elevated pt-3">
         <div className="mb-2 flex items-center justify-between text-xs uppercase tracking-wider text-muted">
-          <span>Starting inventory</span>
-          <span className="text-gold">◉ {character.gold} gold</span>
+          <span>Стартовый инвентарь</span>
+          <span className="text-gold">◉ {character.gold} зол.</span>
         </div>
         <ul className="flex flex-wrap gap-2">
           {inventory.map((item) => (

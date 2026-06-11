@@ -42,7 +42,7 @@ function SelectList({
       <div className="flex items-center justify-between text-xs text-muted">
         <span>{title}</span>
         <button type="button" onClick={onBack} className="hover:text-gold">
-          ← back
+          ← назад
         </button>
       </div>
       <div className="flex flex-col gap-1 overflow-y-auto">
@@ -81,7 +81,7 @@ export default function CombatActions({
   if (!isPlayerTurn) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-2 text-muted">
-        <span className="text-sm">Enemy is acting</span>
+        <span className="text-sm">Ход врага</span>
         <span className="flex gap-1">
           <span className="h-2 w-2 animate-bounce rounded-full bg-muted [animation-delay:-0.2s]" />
           <span className="h-2 w-2 animate-bounce rounded-full bg-muted [animation-delay:-0.1s]" />
@@ -103,15 +103,15 @@ export default function CombatActions({
     <div className="flex flex-1 flex-col gap-2">
       {mode === 'actions' && (
         <div className="grid grid-cols-2 gap-2">
-          <ActionButton label="⚔ Attack" disabled={disabled || living.length === 0} onClick={startAttack} />
-          <ActionButton label="🛡 Dodge" disabled={disabled} onClick={onDodge} />
-          <ActionButton label="💨 Flee" disabled={disabled} onClick={onFlee} />
-          <ActionButton label="🧪 Use Item" disabled={disabled || consumables.length === 0} onClick={() => setMode('item')} />
+          <ActionButton label="⚔ Атака" disabled={disabled || living.length === 0} onClick={startAttack} />
+          <ActionButton label="🛡 Защита" disabled={disabled} onClick={onDodge} />
+          <ActionButton label="💨 Бегство" disabled={disabled} onClick={onFlee} />
+          <ActionButton label="🧪 Предмет" disabled={disabled || consumables.length === 0} onClick={() => setMode('item')} />
         </div>
       )}
       {mode === 'target' && (
         <SelectList
-          title="Choose a target"
+          title="Выбери цель"
           onBack={() => setMode('actions')}
           onPick={(id) => {
             setMode('actions');
@@ -122,7 +122,7 @@ export default function CombatActions({
       )}
       {mode === 'item' && (
         <SelectList
-          title="Use which item?"
+          title="Какой предмет?"
           onBack={() => setMode('actions')}
           onPick={(id) => {
             setMode('actions');

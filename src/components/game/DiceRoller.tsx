@@ -9,10 +9,10 @@ interface DiceRollerProps {
 }
 
 const OUTCOME_LABEL: Record<DiceOutcome, { text: string; cls: string }> = {
-  crit: { text: 'CRITICAL HIT!', cls: 'text-gold crit-pulse' },
-  fail: { text: 'CRITICAL FAIL', cls: 'text-danger' },
-  hit: { text: 'HIT', cls: 'text-green-400' },
-  miss: { text: 'MISS', cls: 'text-muted' },
+  crit: { text: 'КРИТ!', cls: 'text-gold crit-pulse' },
+  fail: { text: 'ПРОВАЛ', cls: 'text-danger' },
+  hit: { text: 'ПОПАДАНИЕ', cls: 'text-green-400' },
+  miss: { text: 'ПРОМАХ', cls: 'text-muted' },
 };
 
 /** Animated die: idle wobble, a tumbling roll on each new result, outcome label. */

@@ -42,13 +42,13 @@ export default function TurnOrderList({ combat, character, activeId }: TurnOrder
 
   return (
     <div className="flex flex-col gap-1.5">
-      <div className="text-xs uppercase tracking-wider text-muted">Round {combat.round}</div>
+      <div className="text-xs uppercase tracking-wider text-muted">Раунд {combat.round}</div>
       {combat.turnOrder.map((entry) => {
         const isPlayer = entry.kind === 'player';
         const enemy = isPlayer ? null : enemyById.get(entry.id);
         const dead = !isPlayer && (!enemy || enemy.hp <= 0);
         const active = entry.id === activeId && !dead;
-        const name = isPlayer ? character.name : enemy?.name ?? 'Unknown';
+        const name = isPlayer ? character.name : enemy?.name ?? 'Неизвестно';
         return (
           <div
             key={entry.id}
@@ -59,7 +59,7 @@ export default function TurnOrderList({ combat, character, activeId }: TurnOrder
                 {isPlayer ? '🛡 ' : '👹 '}
                 {name}
               </span>
-              <span className="shrink-0 text-[10px] text-muted">init {entry.initiative}</span>
+              <span className="shrink-0 text-[10px] text-muted">иниц {entry.initiative}</span>
             </div>
             {!isPlayer && enemy && (
               <>

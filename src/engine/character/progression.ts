@@ -33,28 +33,28 @@ const HIT_DICE: Record<CharacterClass, string> = {
 
 const FEATURES: Record<CharacterClass, Record<number, string>> = {
   fighter: {
-    2: 'Action Surge: Take one additional action on your turn (1/rest)',
-    5: 'Extra Attack: Attack twice when you take the Attack action',
+    2: 'Всплеск действий: одно дополнительное действие в ход (1/отдых)',
+    5: 'Дополнительная атака: при действии «Атака» бьёшь дважды',
   },
   rogue: {
-    2: 'Cunning Action: Dash, Disengage or Hide as a bonus action',
-    5: "Uncanny Dodge: Use your reaction to halve an attack's damage",
+    2: 'Хитрое действие: рывок, отход или скрытность бонусным действием',
+    5: 'Невероятное уклонение: реакцией снижаешь урон атаки вдвое',
   },
   wizard: {
-    2: 'Arcane Tradition: You have chosen your school of magic',
-    5: '3rd-level spells unlocked',
+    2: 'Магическая традиция: ты выбрал свою школу магии',
+    5: 'Открыты заклинания 3-го уровня',
   },
   cleric: {
-    2: 'Channel Divinity: Invoke divine power (1/rest)',
-    5: 'Destroy Undead: Undead of CR 1/2 or lower are destroyed',
+    2: 'Божественный канал: призыв божественной силы (1/отдых)',
+    5: 'Уничтожение нежити: нежить с ПО 1/2 и ниже уничтожается',
   },
   ranger: {
-    2: 'Fighting Style: Choose a combat specialty',
-    5: 'Extra Attack: Attack twice when you take the Attack action',
+    2: 'Боевой стиль: выбери боевую специализацию',
+    5: 'Дополнительная атака: при действии «Атака» бьёшь дважды',
   },
   bard: {
-    2: 'Jack of All Trades: Add half proficiency to non-proficient checks',
-    5: 'Font of Inspiration: Regain Bardic Inspiration on a short rest',
+    2: 'Мастер на все руки: половина владения к непрофильным проверкам',
+    5: 'Источник вдохновения: вдохновение восстанавливается на отдыхе',
   },
 };
 

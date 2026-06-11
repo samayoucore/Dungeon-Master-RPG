@@ -23,8 +23,15 @@ import LevelUpScreen from './LevelUpScreen';
 import Toast, { useToasts } from '../ui/Toast';
 
 const START_NARRATIVE =
-  'You descend into the dungeon. The air is cold and damp. Torchlight flickers across ancient stone walls.';
+  'Ты спускаешься в подземелье. Воздух холоден и сыр. Свет факелов пляшет по древним каменным стенам.';
 const START_BIOME: Biome = 'crypt';
+const BIOME_RU: Record<Biome, string> = {
+  crypt: 'Крипта',
+  forest: 'Лес',
+  castle: 'Замок',
+  cave: 'Пещера',
+  ruins: 'Руины',
+};
 const PANEL = 'min-h-0 flex-col overflow-hidden rounded-lg border border-surface-elevated bg-surface';
 
 type Tab = 'character' | 'log' | 'map' | 'bag';
@@ -70,7 +77,7 @@ export default function GameScreen() {
   const [loot, setLoot] = useState<LootResult | null>(null);
   const { toasts, push } = useToasts();
 
-  const onSaved = useCallback((ok: boolean) => push(ok ? '💾 Saved' : '⚠ Save failed', ok ? 'success' : 'error'), [push]);
+  const onSaved = useCallback((ok: boolean) => push(ok ? '💾 Сохранено' : '⚠ Ошибка сохранения', ok ? 'success' : 'error'), [push]);
   useAutosave(3, onSaved);
 
   const currentRoomId = dungeon?.currentRoomId;
@@ -91,7 +98,7 @@ export default function GameScreen() {
     const room = dungeonNow.rooms.find((r) => r.id === dungeonNow.currentRoomId);
     if (room && room.enemies.length > 0 && !room.isCleared) {
       state.setCombat(initCombat(room.enemies, state.character));
-      state.addNarrative(`A ${room.enemies[0].name} bars your way — to arms!`, 'combat');
+      state.addNarrative(`${room.enemies[0].name} преграждает путь — к оружию!`, 'combat');
     }
   }, [currentRoomId]);
 
@@ -101,12 +108,12 @@ export default function GameScreen() {
     const result = resolveLoot(state.combat.enemies);
     setLoot({ ...result, enemyCount: state.combat.enemies.length });
     state.setDungeonRoomCleared(state.dungeon.currentRoomId);
-    state.addNarrative('The enemies lie defeated. Victory is yours!', 'combat');
+    state.addNarrative('Враги повержены. Победа за тобой!', 'combat');
     state.endCombat();
   }, []);
 
   if (!dungeon || !character) {
-    return <div className="flex min-h-screen items-center justify-center text-muted">Preparing the dungeon…</div>;
+    return <div className="flex min-h-screen items-center justify-center text-muted">Подземелье готовится…</div>;
   }
 
   const currentRoom = dungeon.rooms.find((r) => r.id === dungeon.currentRoomId);
@@ -117,18 +124,18 @@ export default function GameScreen() {
     <div className="flex h-[100dvh] flex-col">
       <header className="flex shrink-0 items-center justify-between border-b border-surface-elevated bg-surface px-4 py-2">
         <div className="text-sm text-muted">
-          Floor {dungeon.floor} · <span className="capitalize text-parchment">{dungeon.biome}</span>
+          Этаж {dungeon.floor} · <span className="text-parchment">{BIOME_RU[dungeon.biome]}</span>
         </div>
         <button type="button" onClick={() => setMenuOpen(true)} className="flex items-center gap-1 rounded-md border border-surface-elevated px-3 py-1 text-sm text-muted transition-colors hover:border-gold hover:text-gold">
-          <Settings className="h-4 w-4" /> Menu
+          <Settings className="h-4 w-4" /> Меню
         </button>
       </header>
 
       <div className="flex flex-1 flex-col gap-3 overflow-hidden p-3 lg:grid lg:grid-cols-[260px_1fr_280px] lg:grid-rows-1">
         <section className={`${leftVisible ? 'flex flex-1' : 'hidden'} lg:flex ${PANEL}`}>
           <div className="hidden shrink-0 border-b border-surface-elevated lg:flex">
-            <LeftTab active={tab !== 'bag'} onClick={() => setTab('character')} label="Hero" />
-            <LeftTab active={tab === 'bag'} onClick={() => setTab('bag')} label="Bag" />
+            <LeftTab active={tab !== 'bag'} onClick={() => setTab('character')} label="Герой" />
+            <LeftTab active={tab === 'bag'} onClick={() => setTab('bag')} label="Сумка" />
           </div>
           {tab === 'bag' ? <InventoryPanel /> : <CharacterSheet character={character} />}
         </section>
@@ -139,7 +146,7 @@ export default function GameScreen() {
         </section>
 
         <section className={`${tab === 'map' ? 'flex flex-1' : 'hidden'} lg:flex ${PANEL}`}>
-          <PanelHeader title="Dungeon Map" />
+          <PanelHeader title="Карта подземелья" />
           <div className="flex min-h-0 flex-col gap-4 overflow-y-auto p-3">
             <DungeonMap dungeon={dungeon} />
             <ExitPanel dungeon={dungeon} disabled={inCombat} />
@@ -153,10 +160,10 @@ export default function GameScreen() {
       </div>
 
       <nav className="flex shrink-0 border-t border-surface-elevated bg-surface lg:hidden">
-        <TabButton active={tab === 'character'} onClick={() => setTab('character')} icon={<User className="h-5 w-5" />} label="Hero" />
-        <TabButton active={tab === 'log'} onClick={() => setTab('log')} icon={<ScrollText className="h-5 w-5" />} label="Log" />
-        <TabButton active={tab === 'map'} onClick={() => setTab('map')} icon={<MapIcon className="h-5 w-5" />} label="Map" />
-        <TabButton active={tab === 'bag'} onClick={() => setTab('bag')} icon={<Backpack className="h-5 w-5" />} label="Bag" />
+        <TabButton active={tab === 'character'} onClick={() => setTab('character')} icon={<User className="h-5 w-5" />} label="Герой" />
+        <TabButton active={tab === 'log'} onClick={() => setTab('log')} icon={<ScrollText className="h-5 w-5" />} label="Лог" />
+        <TabButton active={tab === 'map'} onClick={() => setTab('map')} icon={<MapIcon className="h-5 w-5" />} label="Карта" />
+        <TabButton active={tab === 'bag'} onClick={() => setTab('bag')} icon={<Backpack className="h-5 w-5" />} label="Сумка" />
       </nav>
 
       {inCombat && <CombatPanel onVictory={handleVictory} />}

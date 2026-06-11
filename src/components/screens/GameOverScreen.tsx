@@ -2,15 +2,15 @@ import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 
 const EPITAPHS: { max: number; text: string }[] = [
-  { max: 1, text: 'Their adventure ended before it began.' },
-  { max: 3, text: 'A promising hero, lost to the darkness.' },
-  { max: 5, text: 'They fought bravely, but the dungeon prevailed.' },
-  { max: 7, text: 'A seasoned warrior, felled by an unseen blow.' },
-  { max: 9, text: 'Legends will speak of their deeds... briefly.' },
-  { max: 99, text: 'Even the mightiest fall in the end.' },
+  { max: 1, text: 'Его приключение закончилось, не начавшись.' },
+  { max: 3, text: 'Подающий надежды герой, сгинувший во тьме.' },
+  { max: 5, text: 'Он сражался храбро, но подземелье взяло верх.' },
+  { max: 7, text: 'Бывалый воин, павший от незримого удара.' },
+  { max: 9, text: 'Легенды будут говорить о его деяниях... недолго.' },
+  { max: 99, text: 'Даже величайшие в конце концов падают.' },
 ];
 
-const TITLE = 'YOU DIED';
+const TITLE = 'ТЫ ПОГИБ';
 
 function epitaphFor(level: number): string {
   return (EPITAPHS.find((e) => level <= e.max) ?? EPITAPHS[EPITAPHS.length - 1]).text;
@@ -70,12 +70,12 @@ export default function GameOverScreen() {
           </div>
           <div className="my-3 border-t border-surface-elevated" />
           <div className="grid grid-cols-2 gap-3 text-sm">
-            <Stat icon="🏆" label="Level reached" value={character.level} />
-            <Stat icon="⚔️" label="Enemies slain" value={stats.enemiesKilled} />
-            <Stat icon="🚪" label="Rooms explored" value={stats.roomsExplored} />
-            <Stat icon="💰" label="Gold collected" value={stats.goldFound} />
-            <Stat icon="📜" label="Quests completed" value={questsDone} />
-            <Stat icon="🎲" label="Turns survived" value={stats.turnsPlayed} />
+            <Stat icon="🏆" label="Достигнут уровень" value={character.level} />
+            <Stat icon="⚔️" label="Врагов сражено" value={stats.enemiesKilled} />
+            <Stat icon="🚪" label="Комнат исследовано" value={stats.roomsExplored} />
+            <Stat icon="💰" label="Золота собрано" value={stats.goldFound} />
+            <Stat icon="📜" label="Квестов выполнено" value={questsDone} />
+            <Stat icon="🎲" label="Ходов прожито" value={stats.turnsPlayed} />
           </div>
         </div>
       )}
@@ -86,15 +86,15 @@ export default function GameOverScreen() {
           onClick={() => beginCreation()}
           className="rounded-md bg-gold px-4 py-3 font-semibold text-dungeon transition-colors hover:bg-gold/90"
         >
-          Try Again
+          Попробовать снова
         </button>
-        <p className="text-xs text-muted">Your save has been preserved.</p>
+        <p className="text-xs text-muted">Твоё сохранение не удалено.</p>
         <button
           type="button"
           onClick={() => setScreen('title')}
           className="rounded-md border border-surface-elevated px-4 py-2 text-muted transition-colors hover:border-gold hover:text-gold"
         >
-          Return to Title
+          В главное меню
         </button>
       </div>
     </motion.div>

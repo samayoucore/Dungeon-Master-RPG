@@ -2,17 +2,17 @@ import type { RoomType } from '../../types';
 
 /** Player-facing room names (used by the exit list and room info). */
 export const ROOM_LABELS: Record<RoomType, string> = {
-  entrance: 'Entrance',
-  corridor: 'Corridor',
-  barracks: 'Barracks',
-  library: 'Library',
-  crypt: 'Crypt',
-  trap: 'Trapped Room',
-  puzzle: 'Puzzle Chamber',
-  treasure: 'Treasure Vault',
-  boss: 'Boss Lair',
-  shop: "Merchant's Den",
-  throne: 'Throne Room',
+  entrance: 'Вход',
+  corridor: 'Коридор',
+  barracks: 'Казарма',
+  library: 'Библиотека',
+  crypt: 'Крипта',
+  trap: 'Комната-ловушка',
+  puzzle: 'Комната-загадка',
+  treasure: 'Сокровищница',
+  boss: 'Логово босса',
+  shop: 'Лавка торговца',
+  throne: 'Тронный зал',
 };
 
 /** Emoji per room type. */

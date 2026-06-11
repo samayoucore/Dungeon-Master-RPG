@@ -12,10 +12,10 @@ interface PlayerInputProps {
 const HISTORY_LIMIT = 20;
 
 const QUICK_ACTIONS = [
-  { label: '🔍 Examine', command: 'examine' },
-  { label: '🔎 Search', command: 'search' },
-  { label: '💤 Rest', command: 'rest' },
-  { label: '🎒 Inventory', command: 'inventory' },
+  { label: '🔍 Осмотреть', command: 'осмотреться' },
+  { label: '🔎 Обыскать', command: 'обыскать' },
+  { label: '💤 Отдых', command: 'отдохнуть' },
+  { label: '🎒 Инвентарь', command: 'инвентарь' },
 ];
 
 export default function PlayerInput({ isTyping }: PlayerInputProps) {
@@ -76,7 +76,7 @@ export default function PlayerInput({ isTyping }: PlayerInputProps) {
           value={value}
           onChange={(event) => setValue(event.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="What do you do?"
+          placeholder="Что ты делаешь?"
           className="flex-1 rounded-md border border-surface-elevated bg-dungeon px-3 py-2 text-sm text-parchment placeholder:text-muted/60 focus:border-gold focus:outline-none"
         />
         <button

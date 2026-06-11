@@ -1,7 +1,7 @@
 import { Minus, Plus, RotateCcw } from 'lucide-react';
 import type { CharacterClass, CharacterRace, Stats } from '../../../types';
 import type { StatInfo, StatKey } from '../../../engine/character/data';
-import { CLASS_BY_ID, RACE_BY_ID, STATS_INFO } from '../../../engine/character/data';
+import { CLASS_BY_ID, RACE_BY_ID, STATS_INFO, STAT_ABBR } from '../../../engine/character/data';
 import {
   abilityModifier,
   canDecrease,
@@ -39,11 +39,11 @@ function StatRow({ info, base, final, modifier, canDec, canInc, onDec, onInc }: 
         <div className="font-semibold text-parchment">{info.abbr}</div>
         <div className="truncate text-[11px] leading-tight text-muted">{info.hint}</div>
       </div>
-      <button type="button" className={STEP_BTN} disabled={!canDec} onClick={onDec} aria-label={`Lower ${info.abbr}`}>
+      <button type="button" className={STEP_BTN} disabled={!canDec} onClick={onDec} aria-label={`Уменьшить ${info.abbr}`}>
         <Minus className="h-4 w-4" />
       </button>
       <span className="w-6 text-center text-lg text-parchment">{base}</span>
-      <button type="button" className={STEP_BTN} disabled={!canInc} onClick={onInc} aria-label={`Raise ${info.abbr}`}>
+      <button type="button" className={STEP_BTN} disabled={!canInc} onClick={onInc} aria-label={`Увеличить ${info.abbr}`}>
         <Plus className="h-4 w-4" />
       </button>
       <div className="flex w-16 items-baseline justify-end gap-1">
@@ -65,14 +65,14 @@ export default function StatsStep({ race, characterClass, stats, onChange, onRes
 
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-center font-serif text-4xl text-gold">Distribute Ability Points</h2>
+      <h2 className="text-center font-serif text-4xl text-gold">Распредели очки</h2>
       <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-sm">
         <span className="text-muted">
-          Points remaining:{' '}
+          Осталось очков:{' '}
           <span className={remaining === 0 ? 'font-bold text-danger' : 'font-bold text-gold'}>{remaining}</span>
         </span>
         <span className="text-muted">
-          {cls.name} priority: <span className="text-parchment">{cls.primary.map((p) => p.toUpperCase()).join(', ')}</span>
+          Приоритет ({cls.name}): <span className="text-parchment">{cls.primary.map((p) => STAT_ABBR[p]).join(', ')}</span>
         </span>
       </div>
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-2">
@@ -99,7 +99,7 @@ export default function StatsStep({ race, characterClass, stats, onChange, onRes
         onClick={onReset}
         className="mx-auto flex items-center gap-2 text-sm text-muted transition-colors hover:text-gold"
       >
-        <RotateCcw className="h-4 w-4" /> Reset
+        <RotateCcw className="h-4 w-4" /> Сброс
       </button>
     </div>
   );

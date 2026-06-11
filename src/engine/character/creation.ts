@@ -165,17 +165,17 @@ export function randomName(race: CharacterRace): string {
 
 const INTRO_NARRATIVES: Record<CharacterClass, string> = {
   fighter:
-    'Steel rings at your hip and torch-smoke stings your eyes. The dungeon mouth yawns before you — and you have never been one to walk away from a fight.',
+    'Сталь позвякивает на бедре, дым факелов щиплет глаза. Пасть подземелья распахнулась перед тобой — а ты никогда не привык отступать от драки.',
   rogue:
-    'Old habit folds you into the shadows. Somewhere in the dark below wait locks worth picking and pockets worth emptying. Quietly, you step inside.',
+    'Привычка уводит тебя в тень. Где-то в темноте внизу ждут замки, которые стоит вскрыть, и карманы, которые стоит опустошить. Тихо ты ступаешь внутрь.',
   wizard:
-    'Arcane sigils still smoulder behind your eyes. The ruins ahead hum with forgotten magic, and your spellbook all but aches to be opened. Knowledge awaits.',
+    'Арканные знаки всё ещё тлеют за веками. Руины впереди гудят забытой магией, и твоя книга заклинаний почти ноет, прося раскрыться. Знание ждёт.',
   cleric:
-    'You whisper a prayer and your holy symbol warms in your palm. Something foul festers in the depths, and your god has set this trial before you. You descend.',
+    'Ты шепчешь молитву, и святой символ теплеет в ладони. В глубинах гнездится нечто мерзкое, и твой бог послал тебе это испытание. Ты спускаешься.',
   ranger:
-    'You read the signs others would miss — claw-marks, broken stone, the musk of something large. The wild has crept underground, and you mean to follow it.',
+    'Ты читаешь следы, что другие бы не заметили — отметины когтей, расколотый камень, запах чего-то большого. Дикость ушла под землю, и ты идёшь по её следу.',
   bard:
-    'Every great song needs a great deed. You tune your strings, flash a grin no one is there to see, and stride toward the dark in search of a tale worth telling.',
+    'Любая великая песня нуждается в великом деянии. Ты подтягиваешь струны, ухмыляешься, хоть никто и не видит, и шагаешь во тьму в поисках истории, достойной рассказа.',
 };
 
 /** Short class-specific opening line added to the narrative log. */

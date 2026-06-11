@@ -17,20 +17,12 @@ export default function RoomInfo({ room }: RoomInfoProps) {
         <h3 className="font-serif text-lg capitalize text-gold">{ROOM_LABELS[room.type]}</h3>
       </div>
 
-      {enemyCount > 0 && (
-        <p className="text-sm text-danger">
-          ⚔ {enemyCount} {enemyCount === 1 ? 'enemy' : 'enemies'} present
-        </p>
-      )}
-      {itemCount > 0 && (
-        <p className="text-sm text-gold">
-          📦 {itemCount} {itemCount === 1 ? 'item' : 'items'}
-        </p>
-      )}
+      {enemyCount > 0 && <p className="text-sm text-danger">⚔ Противников рядом: {enemyCount}</p>}
+      {itemCount > 0 && <p className="text-sm text-gold">📦 Предметов: {itemCount}</p>}
       {room.trap && !room.trap.disarmed && (
-        <p className="text-sm text-magic">⚡ Something feels dangerously wrong here…</p>
+        <p className="text-sm text-magic">⚡ Здесь явно чувствуется опасность…</p>
       )}
-      {room.npcId === 'merchant' && <p className="text-sm text-sky-400">💬 A merchant beckons you over.</p>}
+      {room.npcId === 'merchant' && <p className="text-sm text-sky-400">💬 Торговец подзывает тебя.</p>}
       {room.lore && <p className="text-xs italic leading-relaxed text-muted">{room.lore}</p>}
     </div>
   );

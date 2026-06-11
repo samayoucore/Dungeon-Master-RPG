@@ -17,7 +17,7 @@ function Logo() {
         transition={{ duration: 0.8 }}
         className="font-serif text-6xl font-bold text-gold md:text-7xl"
       >
-        ⚔ DUNGEON ⚔
+        ⚔ МАСТЕР ⚔
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 8 }}
@@ -25,7 +25,7 @@ function Logo() {
         transition={{ duration: 0.8, delay: 0.25 }}
         className="mt-1 font-serif text-3xl tracking-[0.5em] text-parchment md:text-4xl"
       >
-        MASTER
+        ПОДЗЕМЕЛИЙ
       </motion.p>
       <motion.p
         initial={{ opacity: 0 }}
@@ -33,7 +33,7 @@ function Logo() {
         transition={{ delay: 0.7 }}
         className="mt-6 text-sm tracking-[0.3em] text-muted"
       >
-        ◆ A procedural RPG adventure ◆
+        ◆ Процедурное RPG-приключение ◆
       </motion.p>
     </div>
   );
@@ -55,10 +55,10 @@ export default function MainMenu({ hasSaves, onContinue }: MainMenuProps) {
       <Logo />
       <nav className="flex flex-col gap-4">
         <MenuButton variant="primary" onClick={beginCreation}>
-          New Adventure
+          Новая игра
         </MenuButton>
-        {hasSaves && <MenuButton onClick={onContinue}>Continue</MenuButton>}
-        <MenuButton onClick={() => setScreen('settings')}>Settings</MenuButton>
+        {hasSaves && <MenuButton onClick={onContinue}>Продолжить</MenuButton>}
+        <MenuButton onClick={() => setScreen('settings')}>Настройки</MenuButton>
       </nav>
     </motion.div>
   );

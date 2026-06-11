@@ -13,12 +13,12 @@ function makeItem(item: Omit<Item, 'id'>): Item {
 
 export function createHealthPotion(): Item {
   return makeItem({
-    name: 'Health Potion',
+    name: 'Зелье лечения',
     type: 'potion',
     rarity: 'common',
     weight: 0.5,
     value: 50,
-    description: 'Restores 2d4 + 2 hit points when quaffed.',
+    description: 'Восстанавливает 2к4 + 2 HP, если выпить.',
     icon: '🧪',
     potionEffect: { effect: 'heal', diceCount: 2, diceType: 'd4', bonus: 2 },
   });
@@ -26,12 +26,12 @@ export function createHealthPotion(): Item {
 
 export function createDagger(): Item {
   return makeItem({
-    name: 'Dagger',
+    name: 'Кинжал',
     type: 'weapon',
     rarity: 'common',
     weight: 1,
     value: 2,
-    description: 'A simple finesse blade. 1d4 piercing damage.',
+    description: 'Простой клинок с фехтовальным свойством. 1к4 колющего урона.',
     icon: '🔪',
     weaponStats: { damageDice: 'd4', damageCount: 1, damageBonus: 0, damageType: 'piercing', finesse: true },
   });
@@ -40,24 +40,24 @@ export function createDagger(): Item {
 export function createGoldPouch(rng: Rng): Item {
   const value = randInt(rng, 10, 30);
   return makeItem({
-    name: 'Gold Pouch',
+    name: 'Кошель с золотом',
     type: 'misc',
     rarity: 'common',
     weight: 0.2,
     value,
-    description: `A small pouch holding ${value} gold pieces.`,
+    description: `Небольшой кошель с ${value} золотыми монетами.`,
     icon: '💰',
   });
 }
 
 export function createLeatherArmor(): Item {
   return makeItem({
-    name: 'Leather Armor',
+    name: 'Кожаный доспех',
     type: 'armor',
     rarity: 'uncommon',
     weight: 10,
     value: 10,
-    description: 'Supple boiled leather. AC 11 + DEX modifier.',
+    description: 'Мягкая варёная кожа. КБ 11 + модификатор Ловкости.',
     icon: '🥋',
     armorStats: { baseAc: 11, slot: 'body' },
   });
@@ -65,12 +65,12 @@ export function createLeatherArmor(): Item {
 
 export function createScrollOfFireball(): Item {
   return makeItem({
-    name: 'Scroll of Fireball',
+    name: 'Свиток огненного шара',
     type: 'artifact',
     rarity: 'rare',
     weight: 0.1,
     value: 150,
-    description: 'A single-use scroll unleashing a 3d6 fire blast.',
+    description: 'Одноразовый свиток, выпускающий взрыв огня на 3к6.',
     icon: '📜',
   });
 }
