@@ -15,6 +15,7 @@ import type {
   StatusEffect,
 } from '../types';
 import { generateRoomDescription } from '../engine/narrative/engine';
+import { messageHistory } from '../engine/ai/messageHistory';
 import { equipmentSlotFor, recomputeAC } from '../engine/character/equipment';
 import {
   MAX_LEVEL,
@@ -120,17 +121,22 @@ export const useGameStore = create<GameStore>()(
       }),
 
     // Creation wizard -> commit the built hero and enter the dungeon.
-    startNewGame: (character) =>
+    startNewGame: (character) => {
+      // Wipe the DM's short-term memory for the new run.
+      messageHistory.clear();
       set((state) => {
         Object.assign(state, createInitialState());
         state.character = character;
         state.screen = 'game';
-      }),
+      });
+    },
 
-    resetGame: () =>
+    resetGame: () => {
+      messageHistory.clear();
       set((state) => {
         Object.assign(state, createInitialState());
-      }),
+      });
+    },
 
     addNarrative: (text, type = 'narration') =>
       set((state) => {
@@ -150,6 +156,8 @@ export const useGameStore = create<GameStore>()(
         character.hp = Math.max(0, Math.min(character.maxHp, character.hp + delta));
         if (character.hp === 0) {
           state.screen = 'game-over';
+          // Reset the DM transcript on death so a new run starts clean.
+          messageHistory.clear();
         }
       }),
 
